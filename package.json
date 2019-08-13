@@ -1,0 +1,9 @@
+{
+  "name": "memify",
+  "version": "0.0.1",
+  "description": "Simple zero-dependence library that exposes CSS & JS versions of popular video memes to use in client side of a web app",
+  "main": "index.js",
+  "repository": "https://github.com/bolotskyDev/memify",
+  "author": "@bolotskyDev",
+  "license": "MIT"
+}
