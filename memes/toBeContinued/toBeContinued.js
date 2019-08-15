@@ -51,9 +51,9 @@ const toBeContinuedRun = (ringtone, toBeContinuedOnFinish, fnOnFinish ) => {
 // run finish procedure
 // (toBeContinuedFinish: CustomEvent, fnOnFinish: Function) -> () -> void 
 const toBeContinuedFinish = (toBeContinuedOnFinish, fnOnFinish) => () => {
-  console.log('finish is running')
   // check if still active (prevent delay functions to run) otherwise do nothing
   if (document.body.classList.contains('toBeContinued--activated')) {
+  console.log('finish is running')
     // clear at the end
     toBeContinuedCleanUp() 
     // dispatch custom event toBeContinuedOnFinish
@@ -73,8 +73,6 @@ const toBeContinuedFinish = (toBeContinuedOnFinish, fnOnFinish) => () => {
 // fn that interrupts active toBeContinued mem event
 // (ringtone: AudioElement) -> (fnOnFinish: Function) -> (toBeContinuedOnFinish: CustomEvent) -> () -> void
 const toBeContinuedTerminate = (ringtone,fnOnFinish) => toBeContinuedOnFinish => () => {
-  // remove state mark
-  document.body.classList.remove('toBeContinued--activated')
   // stop playing audio 
   ringtone.pause()
   // proceed to finish part 
@@ -104,9 +102,10 @@ const addToBeContinuedUI = () => {
 // removes toBeContinued UI
 // () -> ()
 const removeToBeContinuedUI = () => {
-  console.log('removing ui')
   // save arrow el in variable
   const arrow = document.getElementById('toBeContinued__arrow')
+  // proceed if arrow exists
+  if (arrow) {
   // animate out arrow element
   arrow.classList.add('toBeContinued__arrow--out')
   // proceed to eliminate UI
@@ -116,6 +115,7 @@ const removeToBeContinuedUI = () => {
     // remove styling class from body
     document.body.classList.remove('toBeContinued--colorScheme')
   })(500)
+  }
 }
 
 // creates and appends arrow element to document.body
