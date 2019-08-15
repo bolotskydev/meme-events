@@ -4,6 +4,9 @@
  * origin: https://www.youtube.com/watch?v=70syHNphIQg
  * ===============================================
  */
+//@TODO: refactor utils/delay (comments and stub)
+// & toBeContinued (comments and stub)
+// & whole overview of event
 
 // deps
 const utils = require('../../deps/utils')
