@@ -10,27 +10,30 @@ const utils = {}
 // msg: String -> void
 utils.eventStub = msg => console.log(msg)
 
-
-// event factory, exposes onStart and onFinish custom events for any given meme
-// (memeName: String, fnTerminate: Function) -> Object { CustomEventOnFinish, CustomEventOnStart} 
-utils.createEvents = (memeName, fnTerminate) => {
+// custom event factory
+// (memeName: String, eventType: String, options: Object) -> Event Instance
+utils.createEvent = (memeName='MemeEvents', eventType='Default', options = {bubbles: true}) => {
   // create custom events aggregator
   const eventsAggregator = {}
-  // create instances of custom event api
-  eventsAggregator[`${memeName}OnFinish`]= new CustomEvent(`${memeName}OnFinish`, {
-    bubbles: true
-  })
-  eventsAggregator[`${memeName}OnStart`]= new CustomEvent(`${memeName}OnStart`, {
-    bubbles: true,
-    detail: {
-      terminate: fnTerminate(eventsAggregator[`${memeName}OnFinish`]) 
-    }
-  })
-  return eventsAggregator 
+  // create event instance
+  eventsAggregator[`${memeName}On${eventType}`] = new CustomEvent(`${memeName}On${eventType}`, options)
+  // return event instance 
+  return eventsAggregator[`${memeName}On${eventType}`]
 }
 
 // receives function and time after which passed fn will be executed
 // (fn: Function) -> (time: Number) -> void
 utils.delay = fn => time => setTimeout(() => fn(), time)
 
+// same as delay but exposes interface to control fn evaluation passed to delay
+// (fn: Function) -> (time: Number) -> Function
+utils.delayWithControls = fn => time => {
+  // runs delay
+  const delay = setTimeout(() => fn(), time)
+  // clears delay
+  const clearDelay = () => clearTimeout(delay)
+  return clearDelay
+}
+
 module.exports = utils
+

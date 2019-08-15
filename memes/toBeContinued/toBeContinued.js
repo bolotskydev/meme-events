@@ -13,38 +13,33 @@ const memeTrack = require('./assets/roundabout.mp3')
 
 // function that assumes to be passed to addEventListener, triggers toBeContinued meme
 // (optional: {fnOnStart: Function, fnOnFinish: Function}) -> void
-const toBeContinued = ({ fnOnStart, fnOnFinish } = {}) => {
+const toBeContinued = ({fnOnStart, fnOnFinish} = {}) => () => {
   // prevent triggering if already activated 
   if (document.body.classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
   const ringtone = new Audio(memeTrack)
-  // get custom events
-  const {toBeContinuedOnStart, toBeContinuedOnFinish} = utils.createEvents('toBeContinued', toBeContinuedTerminate(ringtone,fnOnFinish))
-  // dispatch custom event toBeContinuedStart
-  document.body.dispatchEvent(toBeContinuedOnStart)
-  // run optional onStart
-  fnOnStart && fnOnStart()
-  // run mem event
-  toBeContinuedRun(ringtone, toBeContinuedOnFinish)
-}
-
-
-// simple procedure fn
-// (ringtone: AudioElement, toBeContinuedOnFinish: CustomEvent) -> void
-const toBeContinuedRun = (ringtone, toBeContinuedOnFinish, fnOnFinish ) => {
   // add initial class to body in order to prevent future meme activation
   // serves as state for terminate function
   document.body.classList.add('toBeContinued--activated')
-  // activate ringtone
-  ringtone.play() 
   // wrap future actions in a callback of listener 
   // only way of getting audio duration
   ringtone.onloadedmetadata = e => {
-    // delay meme UI render until first part of ringtone is played
-    utils.delay(addToBeContinuedUI)(4000)
-    // delay finish part until all ringtone is played
-    utils.delay(toBeContinuedFinish(toBeContinuedOnFinish, fnOnFinish))(e.target.duration * 1000)
+    console.log('start event activation procedure')
+    // wrap UI step into delay and get controls
+    const clearAddUIWithDelay = () => utils.delayWithControls(addToBeContinuedUI)(4000)
+    // create onFinish Custom Event
+    const toBeContinuedOnFinish = utils.createEvent('toBeContinued', 'Finish', {bubbles: true})
+    // wrap finish step into delay and get controls
+    const clearRunFinishWithDelay = () => utils.delayWithControls(toBeContinuedFinish(toBeContinuedOnFinish, fnOnFinish))(e.target.duration * 1000)
+    // create onStart Custom Event
+    const toBeContinuedOnStart = utils.createEvent('toBeContinued', 'Start', {bubbles: true, detail: {terminate: toBeContinuedTerminate(ringtone, fnOnFinish, toBeContinuedOnFinish, [clearAddUIWithDelay(), clearRunFinishWithDelay()])}})
+    // dispatch custom event toBeContinuedStart
+    document.body.dispatchEvent(toBeContinuedOnStart)
+    // run optional onStart
+    fnOnStart && fnOnStart()
   }
+  // activate ringtone
+  ringtone.play() 
 }
 
 
@@ -71,10 +66,13 @@ const toBeContinuedFinish = (toBeContinuedOnFinish, fnOnFinish) => () => {
   */
 
 // fn that interrupts active toBeContinued mem event
-// (ringtone: AudioElement) -> (fnOnFinish: Function) -> (toBeContinuedOnFinish: CustomEvent) -> () -> void
-const toBeContinuedTerminate = (ringtone,fnOnFinish) => toBeContinuedOnFinish => () => {
+// (ringtone: AudioElement,fnOnFinish: Function, terminationFns: [Function]) -> () -> void
+const toBeContinuedTerminate = (ringtone, fnOnFinish, toBeContinuedOnFinish ,terminationFns ) => () => {
+  console.log("Running Terminate function")
   // stop playing audio 
   ringtone.pause()
+  // run set of terminate functions
+  terminationFns.length && terminationFns.forEach(fn => fn())
   // proceed to finish part 
   toBeContinuedFinish(toBeContinuedOnFinish, fnOnFinish)()
 }
@@ -82,6 +80,7 @@ const toBeContinuedTerminate = (ringtone,fnOnFinish) => toBeContinuedOnFinish =>
 // clear memes prints 
 // stopPlaying: Function -> void
 const toBeContinuedCleanUp = () => {
+   console.log('Cleaning up')
     // remove state mark
     document.body.classList.remove('toBeContinued--activated')
     // delay some procedures for smooth clearing
@@ -91,17 +90,17 @@ const toBeContinuedCleanUp = () => {
 // add toBeContinued UI
 // () -> ()
 const addToBeContinuedUI = () => {
-  if (document.body.classList.contains('toBeContinued--activated')) {
+  console.log('adding ui')
     // add styling class to body 
     document.body.classList.add('toBeContinued--colorScheme')
     // add arrow
     addToBeContinuedArrow()
-  }
 }
 
 // removes toBeContinued UI
 // () -> ()
 const removeToBeContinuedUI = () => {
+  console.log('removing ui')
   // save arrow el in variable
   const arrow = document.getElementById('toBeContinued__arrow')
   // proceed if arrow exists
