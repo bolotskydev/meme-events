@@ -4,9 +4,6 @@
  * origin: https://www.youtube.com/watch?v=70syHNphIQg
  * ===============================================
  */
-//@TODO: refactor utils/delay (comments and stub)
-// & toBeContinued (comments and stub)
-// & whole overview of event
 
 // deps
 const utils = require('../../deps/utils')
@@ -15,8 +12,8 @@ const utils = require('../../deps/utils')
 const memeTrack = require('./assets/roundabout.mp3')
 
 // function that assumes to be passed to addEventListener, triggers toBeContinued meme
-// (optional: {fnOnStart: Function, fnOnFinish: Function}) -> void
-const toBeContinued = ({fnOnStart, fnOnFinish} = {}) => () => {
+// (options: {fnOnStart?: Function, fnOnFinish?: Function}) -> void
+const toBeContinuedMemEvent = ({fnOnStart, fnOnFinish} = {}) => () => {
   // prevent triggering if already activated 
   if (document.body.classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
@@ -69,7 +66,7 @@ const toBeContinuedFinish = (toBeContinuedOnFinish, fnOnFinish) => () => {
   */
 
 // fn that interrupts active toBeContinued mem event
-// (ringtone: AudioElement,fnOnFinish: Function, terminationFns: [Function]) -> () -> void
+// (ringtone: AudioElement,fnOnFinish: Function, toBeContinuedOnFinish: CustomEvent, terminationFns: [Function]) -> Function -> void
 const toBeContinuedTerminate = (ringtone, fnOnFinish, toBeContinuedOnFinish ,terminationFns ) => () => {
   console.log("Running Terminate function")
   // stop playing audio 
@@ -127,7 +124,7 @@ const addToBeContinuedArrow = () => {
   const arrow = document.createElement('div')
   arrow.classList.add('toBeContinued__arrow')
   arrow.id = 'toBeContinued__arrow'
-  // set inner html to svg arrow
+  // set inner html to a svg arrow
   arrow.innerHTML = `
     <svg width="100%" height="100%" viewBox="0 0 350 100">
     <path d="M 0 50, L 50 0, v20,h230, v60, h-230,v20, L 0 50" stroke="white" stroke-width="3"/>
@@ -142,4 +139,4 @@ const addToBeContinuedArrow = () => {
 }
 
 
-module.exports = toBeContinued
+module.exports = toBeContinuedMemEvent

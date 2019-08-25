@@ -3,12 +3,14 @@
  */
 
 // import available memes 
-const toBeContinued = require('./memes/toBeContinued/toBeContinued')
+const toBeContinuedMemEvent = require('./memes/toBeContinuedMemEvent/toBeContinuedMemEvent')
+const creditsMemEvent = require('./memes/credits/creditsMemEvent')
 
 // container
-const memify = {}
+const lib = {}
 
-memify.toBeContinued = toBeContinued
+lib.toBeContinuedMemEvent = toBeContinuedMemEvent
+lib.creditsMemEvent = creditsMemEvent
 
 
-module.exports = memify
+module.exports = lib
