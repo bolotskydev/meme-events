@@ -12,8 +12,8 @@ const utils = require('../../deps/utils')
 const memeTrack = require('./assets/credits.mp3')
 
 // function that assumes to be passed to addEventListener, triggers credits meme event
-// (options: {fnOnStart?: Function, fnOnFinish?: Function}) -> void
-const creditsMemEvent = ({fnOnStart, fnOnFinish}) => {
+// (options: {fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
+const creditsMemEvent = ({fnOnStart, fnOnFinish}) => () => {
   // prevent triggering if already activated 
   if (document.body.classList.contains('credits--activated')) return
   // create meme audio ringtone
@@ -25,11 +25,11 @@ const creditsMemEvent = ({fnOnStart, fnOnFinish}) => {
   // only way of getting audio duration
   ringtone.onloadedmetadata = e => {
     // wrap UI step into delay and get controls
-    const clearAddUIWithDelay = () => utils.delayWithControls(addCreditsUI)(1000)
+    const clearAddUIWithDelay = () => utils.delayWithControls(addCreditsUI)(1200)
     // create onFinish Custom Event
     const creditsOnFinish = utils.createEvent('credits', 'Finish', {bubbles: true})
     // wrap finish step into delay and get controls
-    const clearRunFinishWithDelay = () => utils.delayWithControls(creditsFinish(creditsFinish, fnOnFinish))(e.target.duration * 1000)
+    const clearRunFinishWithDelay = () => utils.delayWithControls(creditsFinish(creditsOnFinish, fnOnFinish))(e.target.duration * 1000)
     // create onStart Custom Event
     const creditsOnStart = utils.createEvent('credits', 'Start', {bubbles: true, detail: {terminate: creditsTerminate(ringtone, fnOnFinish, creditsOnFinish, [clearAddUIWithDelay(), clearRunFinishWithDelay()])}})
     // dispatch custom event creditsOnStart
@@ -76,7 +76,6 @@ const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
   * ==============================
   */
 
-
 // clear memes prints 
 // stopPlaying: Function -> void
 const creditsCleanUp = () => {
@@ -98,40 +97,41 @@ const addCreditsUI = () => {
 // removes credits UI
 // () -> ()
 const removeCreditsUI = () => {
-  //const bd = document.querySelector('credits--backdrop')
-  document.body.removeChild('credits--backdrop')
+  const bd = document.body.querySelector('.credits--backdrop')
+  document.body.removeChild(bd)
 }
 
 // runs credits titles
 // () -> void
 const runCreditsTitles = () => {
+  console.log('Trying to run title change')
   // save backdrop element into a variable
-  const bd = document.querySelector('credits--backdrop')
+  const bd = document.body.querySelector('.credits--backdrop')
   // change titles 1 step
   utils.delay(() => {
     bd.innerHTML = `
       <h1>Executive Producer</h1>
-      <span>larry david</span>
+      <p>larry david</p>
     ` 
-  }, 1000)
+  })(1000)
   // change titles 2 step
   utils.delay(() => {
     bd.innerHTML = `
       <h1>Executive Producer</h1>
-      <span>jeff garlin</span>
+      <p>jeff garlin</p>
     ` 
-  }, 2000)
+  })(2000)
 }
 
 // creates backdrop element
 // () -> void
-const createCreditsBackdrop => {
+const createCreditsBackdrop = () => {
   // create element
   const bd = document.createElement('div')
   bd.classList.add('credits--backdrop')
   bd.innerHTML = `
     <h1>Directed by</h1> 
-    <span>robert b. weide</span>
+    <p>robert b. weide</p>
   `
   document.body.appendChild(bd)
 }

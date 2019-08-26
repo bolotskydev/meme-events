@@ -1,5 +1,5 @@
 {
-  "name": "mem-events",
+  "name": "meme-events",
   "version": "0.1.0",
   "description": "Simple zero-dependence library that exposes CSS & JS versions of popular video memes to use in client side of a web app",
   "main": "index.js",

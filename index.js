@@ -3,14 +3,14 @@
  */
 
 // import available memes 
-const toBeContinuedMemEvent = require('./memes/toBeContinuedMemEvent/toBeContinuedMemEvent')
-const creditsMemEvent = require('./memes/credits/creditsMemEvent')
+const toBeContinuedMemeEvent = require('./events/toBeContinuedMemeEvent/toBeContinuedMemeEvent')
+const creditsMemeEvent = require('./events/creditsMemeEvent/creditsMemeEvent')
 
 // container
 const lib = {}
 
-lib.toBeContinuedMemEvent = toBeContinuedMemEvent
-lib.creditsMemEvent = creditsMemEvent
+lib.toBeContinuedMemeEvent = toBeContinuedMemeEvent
+lib.creditsMemeEvent = creditsMemeEvent
 
 
 module.exports = lib
