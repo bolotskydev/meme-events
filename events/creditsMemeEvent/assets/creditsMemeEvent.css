@@ -1,21 +1,21 @@
 @font-face {
- font-family: 'Clarendon';
- src: url('clarendon.otf') format('opentype');
+  font-family: 'Clarendon';
+  src: url('clarendon.otf') format('opentype');
 }
 
 .credits--active {
   position: relative;
-  overflow: hidden; 
+  overflow: hidden;
   z-index: -1;
 }
 
-.credits--backdrop {
+.credits__backdrop {
   position: absolute;
   right: 0;
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: black; 
+  background-color: black;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -23,7 +23,7 @@
   z-index: 9999;
 }
 
-.credits--backdrop h1 {
+.credits__backdrop h1 {
   color: white;
   font-family: 'Clarendon', serif;
   text-transform: capitalize;
@@ -32,9 +32,9 @@
   font-weight: 300;
   margin: 0;
   letter-spacing: 2px;
-} 
+}
 
-.credits--backdrop p {
+.credits__backdrop p {
   font-family: 'Clarendon', serif;
   text-transform: uppercase;
   color: white;

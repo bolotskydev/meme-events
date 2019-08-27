@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 
 .toBeContinued--colorScheme {
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   filter: sepia(1) hue-rotate(45deg);
   overflow: hidden;
 }
@@ -11,12 +11,12 @@
   position: absolute;
   bottom: 10vh;
   right: 10vw;
-  width: 30vw; 
-  animation: flyIn .5s forwards ease-in;
+  width: 30vw;
+  animation: flyIn 0.5s forwards ease-in;
   transform: translateX(100%);
 }
 .toBeContinued__arrow--out {
-  animation: flyOut .5s forwards ease-out; 
+  animation: flyOut 0.5s forwards ease-out;
 }
 
 .toBeContinued__arrow svg text {
@@ -26,20 +26,18 @@
 
 @keyframes flyIn {
   0% {
-    transform: translateX(100%); 
+    transform: translateX(100%);
   }
   100% {
-    transform: translateX(0); 
-  }
-} 
-
-@keyframes flyOut {
-  0% {
-    transform: translateX(0); 
-  }
-  100% {
-    transform: translateX(100%); 
+    transform: translateX(0);
   }
 }
 
-
+@keyframes flyOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

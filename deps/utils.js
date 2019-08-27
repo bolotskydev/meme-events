@@ -6,26 +6,29 @@
 
 const utils = {}
 
-// simple event stub that logs out any passed msg
-// msg: String -> void
-utils.eventStub = msg => console.log(msg)
-
 // custom event factory
 // (memeName: String, eventType: String, options: Object) -> Event Instance
-utils.createEvent = (memeName='MemeEvents', eventType='Default', options = {bubbles: true}) => {
+utils.createEvent = (
+  memeName = 'MemeEvents',
+  eventType = 'Default',
+  options = { bubbles: true }
+) => {
   // create custom events aggregator
   const eventsAggregator = {}
   // create event instance
-  eventsAggregator[`${memeName}On${eventType}`] = new CustomEvent(`${memeName}On${eventType}`, options)
-  // return event instance 
+  eventsAggregator[`${memeName}On${eventType}`] = new CustomEvent(
+    `${memeName}On${eventType}`,
+    options
+  )
+  // return event instance
   return eventsAggregator[`${memeName}On${eventType}`]
 }
 
-// receives function and time after which passed fn will be executed
+// receives function arg and time arg after which passed fn arg will be executed
 // (fn: Function) -> (time: Number) -> void
 utils.delay = fn => time => setTimeout(() => fn(), time)
 
-// same as delay but exposes interface to control fn evaluation passed to delay
+// same as delay but returns back a fn that could clear delay
 // (fn: Function) -> (time: Number) -> Function
 utils.delayWithControls = fn => time => {
   // runs delay
@@ -36,4 +39,3 @@ utils.delayWithControls = fn => time => {
 }
 
 module.exports = utils
-

@@ -1,6 +1,6 @@
 /*
  * ===============================================
- * CSS & JS version of credits meme 
+ * CSS & JS version of Curb Your Enthusiasm Credits meme 
  * origin: https://www.youtube.com/watch?v=CdqMZ_s7Y6k
  * ===============================================
  */
@@ -11,30 +11,29 @@ const utils = require('../../deps/utils')
 // assets
 const memeTrack = require('./assets/credits.mp3')
 
-// function that assumes to be passed to addEventListener, triggers credits meme event
-// (options: {fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
+// main function of creditsMemeEvent 
+// ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
 const creditsMemEvent = ({fnOnStart, fnOnFinish}) => () => {
   // prevent triggering if already activated 
   if (document.body.classList.contains('credits--activated')) return
   // create meme audio ringtone
   const ringtone = new Audio(memeTrack)
-  // add initial class to body in order to prevent future meme activation
-  // serves as state for terminate function
+  // add initial class to a body in order to prevent future meme activation
+  // serves as state for the terminate function
   document.body.classList.add('credits--activated')
-  // wrap future actions in a callback of listener 
-  // only way of getting audio duration
+  // wrap future execution steps in a callback of onloadedmetadata listener in order to get acces to a duration prop
   ringtone.onloadedmetadata = e => {
     // wrap UI step into delay and get controls
     const clearAddUIWithDelay = () => utils.delayWithControls(addCreditsUI)(1200)
     // create onFinish Custom Event
     const creditsOnFinish = utils.createEvent('credits', 'Finish', {bubbles: true})
-    // wrap finish step into delay and get controls
+    // wrap finish step into delay and get clear fn back 
     const clearRunFinishWithDelay = () => utils.delayWithControls(creditsFinish(creditsOnFinish, fnOnFinish))(e.target.duration * 1000)
     // create onStart Custom Event
     const creditsOnStart = utils.createEvent('credits', 'Start', {bubbles: true, detail: {terminate: creditsTerminate(ringtone, fnOnFinish, creditsOnFinish, [clearAddUIWithDelay(), clearRunFinishWithDelay()])}})
     // dispatch custom event creditsOnStart
     document.body.dispatchEvent(creditsOnStart)
-    // run optional onStart
+    // run optional onStart fn if exists
     fnOnStart && fnOnStart()
   }
   // activate ringtone
@@ -42,29 +41,28 @@ const creditsMemEvent = ({fnOnStart, fnOnFinish}) => () => {
 } 
 
 
-// fn that interrupts active credits meme event
-// (ringtone: AudioElement,fnOnFinish: Function, creditsOnFinish: CustomEvent, terminationFns: [Function]) -> Function -> void
+// fn that interrupts active credits meme event execution
+// (ringtone: AudioElement, fnOnFinish: Function, creditsOnFinish: Event, terminationFns: [...Arry]) -> Function -> void
 const creditsTerminate = (ringtone, fnOnFinish, creditsOnFinish ,terminationFns ) => () => {
-  console.debug('Running Terminate Function')
   // stop playing audio 
   ringtone.pause()
-  // run set of terminate functions
+  // run set of terminatation functions
   terminationFns.length && terminationFns.forEach(fn => fn())
-  // proceed to finish part 
+  // proceed to the finish part 
   creditsFinish(creditsOnFinish, fnOnFinish)()
 }
 
 
 // run finish procedure
-// (creditsFinish: CustomEvent, fnOnFinish: Function) -> () -> void 
+// (creditsFinish: Event, fnOnFinish: Function) -> () -> void 
 const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
   if (document.body.classList.contains('credits--activated')) {
-    // clear at the end
+    // perform clean up 
     creditsCleanUp() 
     // dispatch custom event creditsOnFinish
     document.body.dispatchEvent(creditsOnFinish) 
-    // run optional onFinish fn
+    // run optional onFinish fn if exists
     fnOnFinish && fnOnFinish()
   }
 }
@@ -77,36 +75,34 @@ const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
   */
 
 // clear memes prints 
-// stopPlaying: Function -> void
+// () -> void
 const creditsCleanUp = () => {
     // remove state mark
     document.body.classList.remove('credits--activated')
-    // delay some procedures for smooth clearing
+    // remove meme UI
     removeCreditsUI()
 } 
 
 // add credits UI
-// () -> ()
+// () -> void
 const addCreditsUI = () => {
-    // create backdrop and add it the body
+    // create backdrop element and add it the body
     createCreditsBackdrop()
     // run credits 
     runCreditsTitles()
 }
 
 // removes credits UI
-// () -> ()
+// () -> void
 const removeCreditsUI = () => {
-  const bd = document.body.querySelector('.credits--backdrop')
-  document.body.removeChild(bd)
+  document.body.removeChild(document.body.querySelector('.credits__backdrop'))
 }
 
 // runs credits titles
 // () -> void
 const runCreditsTitles = () => {
-  console.log('Trying to run title change')
   // save backdrop element into a variable
-  const bd = document.body.querySelector('.credits--backdrop')
+  const bd = document.body.querySelector('.credits__backdrop')
   // change titles 1 step
   utils.delay(() => {
     bd.innerHTML = `
@@ -123,12 +119,12 @@ const runCreditsTitles = () => {
   })(2000)
 }
 
-// creates backdrop element
+// creates backdrop element and appends it to a body
 // () -> void
 const createCreditsBackdrop = () => {
-  // create element
+  // prepare element structure
   const bd = document.createElement('div')
-  bd.classList.add('credits--backdrop')
+  bd.classList.add('credits__backdrop')
   bd.innerHTML = `
     <h1>Directed by</h1> 
     <p>robert b. weide</p>
