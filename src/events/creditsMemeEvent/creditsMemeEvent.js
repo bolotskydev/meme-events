@@ -10,6 +10,7 @@ import utils from '../../helpers/utils'
 
 // assets
 import memeTrack from './assets/credits.mp3'
+import creditsStyles from './assets/creditsMemeEvent.css'
 
 /*
  * ==============================
@@ -154,4 +155,4 @@ const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
   ringtone.play()
 }
 
-export default creditsMemeEvent
+export { creditsMemeEvent, creditsStyles }

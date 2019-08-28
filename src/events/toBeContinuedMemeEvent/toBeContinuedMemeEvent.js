@@ -9,6 +9,7 @@
 import utils from '../../helpers/utils'
 // assets
 import memeTrack from './assets/roundabout.mp3'
+import toBeContinuedStyles from './assets/toBeContinuedMemeEvent.css'
 
 /*
  * ==============================
@@ -156,4 +157,4 @@ const toBeContinuedMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
   ringtone.play()
 }
 
-export default toBeContinuedMemeEvent
+export { toBeContinuedMemeEvent, toBeContinuedStyles }

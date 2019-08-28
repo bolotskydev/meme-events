@@ -1,12 +1,25 @@
 /*
- *Entry point of memify
+ *Entry point of meme-events
  */
 
 // import available memes
-const toBeContinuedMemeEvent = require('./events/toBeContinuedMemeEvent/toBeContinuedMemeEvent')
-const creditsMemeEvent = require('./events/creditsMemeEvent/creditsMemeEvent')
-
-export default {
+import {
   toBeContinuedMemeEvent,
-  creditsMemeEvent
-} 
+  toBeContinuedStyles,
+} from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
+import {
+  creditsMemeEvent,
+  creditsStyles,
+} from './events/creditsMemeEvent/creditsMemeEvent'
+
+// arrgents into sets
+const toBeContinuedSet = {
+  event: toBeContinuedMemeEvent,
+  styles: toBeContinuedStyles,
+}
+const creditsSet = {
+  event: creditsMemeEvent,
+  styles: creditsStyles,
+}
+
+export { toBeContinuedSet, creditsSet }
