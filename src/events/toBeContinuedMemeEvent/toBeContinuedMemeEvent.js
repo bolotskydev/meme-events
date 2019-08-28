@@ -157,4 +157,4 @@ const toBeContinuedMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
   ringtone.play()
 }
 
-export { toBeContinuedMemeEvent, toBeContinuedStyles }
+export {toBeContinuedMemeEvent, toBeContinuedStyles}

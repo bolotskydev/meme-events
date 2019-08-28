@@ -7,12 +7,13 @@ import {
   toBeContinuedMemeEvent,
   toBeContinuedStyles,
 } from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
+
 import {
   creditsMemeEvent,
   creditsStyles,
 } from './events/creditsMemeEvent/creditsMemeEvent'
 
-// arrgents into sets
+// arrange into sets for useful chunky export
 const toBeContinuedSet = {
   event: toBeContinuedMemeEvent,
   styles: toBeContinuedStyles,
