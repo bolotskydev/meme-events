@@ -9,7 +9,7 @@ const utils = {}
 // custom event factory
 // (memeName: String, eventType: String, options: Object) -> Event Instance
 utils.createEvent = (
-  memeName = 'MemeEvents',
+  memeName = 'MemeEvent',
   eventType = 'Default',
   options = { bubbles: true }
 ) => {

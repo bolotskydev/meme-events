@@ -4,7 +4,7 @@ const { expect } = require('chai')
 // what is being tested
 const { creditsSet, toBeContinuedSet } = require('../src/index')
 
-describe('Check if all event sets are exposed', () => {
+describe('Test suit for index file', () => {
   // check creditsSet
   it('Credits set is not undefined', () => {
     expect(creditsSet).to.not.equal(undefined)
