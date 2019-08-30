@@ -5,16 +5,14 @@
   "main": "./dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "test": "yarn run lint && yarn run cover",
-    "test:prod": "cross-env BABEL_ENV=production yarn run test",
-    "test:only": "mocha --require mocha-compilers-ignore.js --require @babel/register --require @babel/polyfill --recursive",
-    "test:watch": "yarn test --watch",
-    "test:examples": "node examples/",
-    "cover": "nyc --check-coverage yarn run test:only",
+    "test": "yarn test:unit && yarn test:int",
+    "test:unit": "jest src/**/*.unit.test.js --config=jest.config.js --colors",
+    "test:int": "jest tests/**/*.int.test.js --config=jest.config.js --colors",
+    "test:watch": "jest src/**/*.unit.test.js --watch --config=jest.config.js",
     "lint": "eslint src test",
     "format": "prettier --check 'src/**/*.{css,js}'",
     "build": "webpack --progress",
-    "prepublish-old": "yarn run clean && yarn format && yarn run lint && yarn run test && yarn run build"
+    "prepublish-old": "yarn clean && yarn format && yarn lint && yarn test && yarn build"
   },
   "files": [
     "dist",

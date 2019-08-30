@@ -155,4 +155,10 @@ const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
   ringtone.play()
 }
 
-export { creditsMemeEvent, creditsStyles }
+// aggregate for convenient export 
+const creditsMemeEventSet = {
+  event: creditsMemeEvent,
+  styles: creditsStyles,
+}
+
+export default creditsMemeEventSet

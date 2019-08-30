@@ -38,4 +38,4 @@ utils.delayWithControls = fn => time => {
   return clearDelay
 }
 
-module.exports = utils
+export default utils

@@ -21,5 +21,15 @@ CHANGELOG.md
 .editorconfig
 .eslintignore
 .eslintrc
+.eslintrc.js
+.prettierrc.js
+.babelrc.js
+jest.config.js
+postcss.config.js
+webpack.config.js
+mocha-compilers-ignore.js
 .babelrc
 .gitignore
+
+# other
+TODO.txt
