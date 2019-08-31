@@ -159,8 +159,8 @@ const toBeContinuedMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
 
 // aggregate for convenient export 
 const toBeContinuedMemeEventSet = {
-  event: toBeContinuedMemeEvent,
-  styles: toBeContinuedStyles,
+  toBeContinuedMemeEvent,
+  toBeContinuedStyles,
 }
 
 export default toBeContinuedMemeEventSet 

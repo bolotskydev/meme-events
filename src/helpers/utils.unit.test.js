@@ -1,6 +1,13 @@
-import { createEvent, delay, delayWithControls } from './utils'
+import { createEvent, delay, delayWithControls, initiate$ } from './utils'
 
 jest.useFakeTimers()
+
+// mock console
+global.console = {
+  log: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+}
 
 describe('UTILS UNIT TEST SUIT', () => {
   // setup
@@ -82,6 +89,68 @@ describe('UTILS UNIT TEST SUIT', () => {
       expect(event.type).toBe('TestOnStart')
       expect(event.bubbles).toBe(true)
       expect(event.detail).toEqual({ test: 'data' })
+    })
+  })
+  describe('initiate$ function testing', () => {
+    describe('--initiation phase tests', () => {
+      beforeAll(() => {
+        document.body.innerHTML = `
+          <h1 class="title" id="solo">Single</h1>
+          <ul class="itemHolder">
+            <li class="item">Multiple 1</li> 
+            <li class="item">Multiple 2</li> 
+            <li class="item">Multiple 3</li> 
+          </ul>`
+      })
+      test('must send warn message to console if window.$ already exists and skip next evaluation steps', () => {
+        window.$ = () => 'stub'
+        initiate$()
+        expect(global.console.warn).toBeCalled()
+        expect(global.console.warn).toHaveBeenCalledTimes(1)
+        expect(window.$()).toEqual('stub')
+        // reset window.$ in order to run the rest of the suit properly
+        window.$ = undefined
+      })
+      test('window object contains $ method after fn initialization', () => {
+        initiate$()
+        expect(window.$).toBeDefined()
+      })
+      test('window object contains on method after fn initialization', () => {
+        expect(window.on).toBeDefined()
+      })
+      test('window object contains off method after initialization', () => {
+        expect(window.off).toBeDefined()
+      })
+      test('Node.prototype.on exists after initialization', () => {
+        expect(Node.prototype.on).toBeDefined()
+      })
+      test('Node.prototype.off exists after initialization', () => {
+        expect(Node.prototype.off).toBeDefined()
+      })
+      test('NodeList.prototype.on exists after initialization', () => {
+        expect(NodeList.prototype.on).toBeDefined()
+      })
+      test('NodeList.prototype.off exists after initialization', () => {
+        expect(NodeList.prototype.off).toBeDefined()
+      })
+    })
+    describe('--core functionality tests', () => {
+      // set up simple html page via jsdom lib
+      // for correct handling $ test cases
+      beforeAll(() => {
+        initiate$()
+      })
+      test('must throw a TypeError if no selector was passed', () => {
+        expect(() => $()).toThrow()
+      })
+      test('must throw a TypeError if empty selector was passed', () => {
+        expect(() => $('')).toThrow()
+      })
+      /*
+       *test('', () => {
+       *  expect().toThrow()
+       *})
+       */
     })
   })
 })

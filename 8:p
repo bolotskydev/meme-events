@@ -1,0 +1,84 @@
+/*
+ *Simple utils library for memify
+ */
+
+// utils container
+
+const utils = {}
+
+// custom event factory
+// (memeName: String, eventType: String, options: Object) -> Event Instance
+utils.createEvent = (
+  memeName = 'MemeEvent',
+  eventType = 'Default',
+  options = { bubbles: true }
+) => new CustomEvent(`${memeName}On${eventType}`, options)
+
+// receives function arg and time arg after which passed fn arg will be executed
+// (fn: Function) -> (time: Number) -> void
+utils.delay = fn => time => setTimeout(() => fn(), time)
+
+// same as delay but returns back a fn that could clear delay
+// (fn: Function) -> (time: Number) -> Function
+utils.delayWithControls = fn => time => {
+  // runs delay
+  const delay = setTimeout(() => fn(), time)
+  // clears delay
+  const clearDelay = () => clearTimeout(delay)
+  return clearDelay
+}
+
+// // function that emulates jQuery dom manipulation syntax (selecting and adding listeners)
+// // (CSSSelector: String) -> Node | NodeList | Null
+// utils.$ = CSSSelector => {
+// // select all elems that matches selector
+// const all = document.querySelectorAll(CSSSelector)
+// // check if matched any else return null
+// if (!all.length) return null
+// if (all && all.length > 1) {
+// all.prototype.__proto__ = Array.prototype
+// all.prototype.on = NodeList.prototype.addEventListener = function (name, fn) => {
+// this.forEach((elem,i) => elem.on(name,fn))
+// }
+// return all
+// } else if (all && all.length === 1) {
+// all[0]
+// return document.querySelector(el)
+// }
+// return null
+// }
+
+// function that introduces jQuery dom manipulation syntax (selecting,adding & removing listeners)
+// () -> void
+utils.initiate$ = () => {
+  // check if window has $ property to avoid interfering with other modules
+  if (window && window.$) {
+    console.warning(
+      "$ util function hasn't been initiated: window object already includes $ property"
+    )
+    return
+  }
+  // introduce $ method in the window object
+  window.$ = document.querySelectorAll.bind(document)
+  // simulate jQuery .on() method
+  Node.prototype.on = window.on = function(name, fn) {
+    this.addEventListener(name, fn)
+  }
+  // simulate jQuery .off() method
+  Node.prototype.off = function(name, fn) {
+    this.removeEventListener(name, fn)
+  }
+  // change NodeList proto from Object to Array for easy manipulation
+  NodeList.prototype.__proto__ = Array.prototype
+  // introduce .on() method on NodeList
+  NodeList.prototype.on = NodeList.prototype.addEventListener = function(
+    name,
+    fn
+  ) {
+    this.forEach((elem, i) => {
+      elem.on(name, fn)
+    })
+  }
+}
+
+export default utils

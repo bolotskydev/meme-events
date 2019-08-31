@@ -20,13 +20,13 @@ import creditsStyles from './assets/creditsMemeEvent.css'
 
 // removes credits UI
 // () -> void
-const removeCreditsUI = () => {
+export const removeCreditsUI = () => {
   document.body.removeChild(document.body.querySelector('.credits__backdrop'))
 }
 
 // runs credits titles
 // () -> void
-const runCreditsTitles = () => {
+export const runCreditsTitles = () => {
   // save backdrop element into a variable
   const bd = document.body.querySelector('.credits__backdrop')
   // change titles 1 step
@@ -47,7 +47,7 @@ const runCreditsTitles = () => {
 
 // creates backdrop element and appends it to a body
 // () -> void
-const createCreditsBackdrop = () => {
+export const createCreditsBackdrop = () => {
   // prepare element structure
   const bd = document.createElement('div')
   bd.classList.add('credits__backdrop')
@@ -60,7 +60,7 @@ const createCreditsBackdrop = () => {
 
 // clear memes prints
 // () -> void
-const creditsCleanUp = () => {
+export const creditsCleanUp = () => {
   // remove state mark
   document.body.classList.remove('credits--activated')
   // remove meme UI
@@ -69,7 +69,7 @@ const creditsCleanUp = () => {
 
 // add credits UI
 // () -> void
-const addCreditsUI = () => {
+export const addCreditsUI = () => {
   // create backdrop element and add it the body
   createCreditsBackdrop()
   // run credits
@@ -84,7 +84,7 @@ const addCreditsUI = () => {
 
 // run finish procedure
 // (creditsFinish: Event, fnOnFinish: Function) -> () -> void
-const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
+export const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
   if (document.body.classList.contains('credits--activated')) {
     // perform clean up
@@ -155,10 +155,10 @@ const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
   ringtone.play()
 }
 
-// aggregate for convenient export 
+// aggregate for convenient export
 const creditsMemeEventSet = {
-  event: creditsMemeEvent,
-  styles: creditsStyles,
+  creditsMemeEvent,
+  creditsStyles,
 }
 
 export default creditsMemeEventSet
