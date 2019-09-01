@@ -1,11 +1,13 @@
-/* eslint-env node, jest */
 import utils from './utils'
+
+const { createEvent, delay, delayWithControls, initiate$ } = utils
+/* eslint-env node, jest */
+jest.useFakeTimers()
+/* global $ */
 
 /*
  *HELPERS & MOCKS
  */
-/* global $ */
-jest.useFakeTimers()
 
 // mock console
 global.console = {
@@ -14,7 +16,6 @@ global.console = {
   error: jest.fn(),
 }
 // simple click simulation function
-// simulateClick(el: Node) -> Node
 const simulateClick = el => {
   const click = new MouseEvent('click', {
     bubbles: true,
@@ -24,8 +25,6 @@ const simulateClick = el => {
   el.dispatchEvent(click)
   return el
 }
-
-const { createEvent, delay, delayWithControls, initiate$ } = utils
 
 /*
  *TEST SECTION
@@ -208,49 +207,12 @@ describe('UTILS UNIT TEST SUIT', () => {
       })
     })
     describe('--optional functionality test', () => {
-      test('able to use .on method on window correctly', () => {
-        window.on('click', callback)
-        simulateClick(window)
-        expect(callback).toBeCalled()
-        expect(callback).toHaveBeenCalledTimes(1)
-      })
-      test('able to use .off method on window correctly', () => {
-        window.on('click', callback)
-        window.off('click', callback)
-        simulateClick(window)
-        expect(callback).not.toBeCalled()
-      })
-      test('able to use .on method directly on the result of qS', () => {
-        const bd = document.querySelector('body')
-        bd.on('click', callback)
-        simulateClick(bd)
-        expect(callback).toBeCalled()
-        expect(callback).toHaveBeenCalledTimes(1)
-      })
-      test('able to use .off method directly on the result of qS', () => {
-        const bd = document.querySelector('body')
-        bd.on('click', callback)
-        bd.off('click', callback)
-        simulateClick(bd)
-        expect(callback).not.toBeCalled()
-      })
-      test('able to use .on method directly on the results of qSA', () => {
-        const all = document.querySelectorAll('li')
-        all.on('click', callback)
-        simulateClick(all[0])
-        expect(callback).toBeCalled()
-        all.forEach(node => simulateClick(node))
-        expect(callback).toHaveBeenCalledTimes(4)
-      })
-      test('able to use .off method directly on the results of qSA', () => {
-        const all = document.querySelectorAll('li')
-        all.on('click', callback)
-        all.off('click', callback)
-        simulateClick(all[0])
-        expect(callback).not.toBeCalled()
-        all.forEach(node => simulateClick(node))
-        expect(callback).not.toBeCalled()
-      })
+      test.todo('able to use .on method on window correctly')
+      test.todo('able to use .off method on window correctly')
+      test.todo('able to use .on method directly on the result of qS')
+      test.todo('able to use .off method directly on the result of qS')
+      test.todo('able to use .on method directly on the results of qSA')
+      test.todo('able to use .off method directly on the results of qSA')
     })
   })
 })

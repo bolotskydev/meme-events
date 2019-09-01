@@ -46,16 +46,16 @@ utils.initiate$ = () => {
     this.addEventListener(name, fn, options)
     return this
   }
-  const off = function(name, fn, options) {
-    this.removeEventListener(name, fn, options)
+  const off = function(name, fn) {
+    this.removeEventListener(name, fn)
     return this
   }
   const onForList = function(name, fn, options) {
     this.forEach(el => el.on(name, fn, options))
     return this
   }
-  const offForList = function(name, fn, options) {
-    this.forEach(el => el.on(name, fn, options))
+  const offForList = function(name, fn) {
+    this.forEach(el => el.off(name, fn))
     return this
   }
   const $ = document.querySelectorAll.bind(document)
