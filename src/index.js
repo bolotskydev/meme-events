@@ -3,9 +3,8 @@
  */
 
 // import available memes
-import {toBeContinuedMemeEventSet} from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
+import toBeContinuedMemeEventSet from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
 
-import {creditsMemeEventSet} from './events/creditsMemeEvent/creditsMemeEvent'
+import creditsMemeEventSet from './events/creditsMemeEvent/creditsMemeEvent'
 
-
-export { toBeContinuedMemeEventSet, creditsMemeEventSet}
+export { toBeContinuedMemeEventSet, creditsMemeEventSet }

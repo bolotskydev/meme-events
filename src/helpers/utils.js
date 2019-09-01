@@ -1,14 +1,10 @@
 /*
- *Simple utils library for memify
+ * Simple utils library for meme-events
  */
-
-// utils container
-
-const utils = {}
 
 // custom event factory
 // (memeName: String, eventType: String, options: Object) -> Event Instance
-utils.createEvent = (
+export const createEvent = (
   memeName = 'MemeEvent',
   eventType = 'Default',
   options = { bubbles: true }
@@ -16,21 +12,21 @@ utils.createEvent = (
 
 // receives function arg and time arg after which passed fn arg will be executed
 // (fn: Function) -> (time: Number) -> void
-utils.delay = fn => time => setTimeout(() => fn(), time)
+export const delay = fn => time => setTimeout(() => fn(), time)
 
 // same as delay but returns back a fn that could clear delay
 // (fn: Function) -> (time: Number) -> Function
-utils.delayWithControls = fn => time => {
+export const delayWithControls = fn => time => {
   // runs delay
-  const delay = setTimeout(() => fn(), time)
+  const _delay = setTimeout(() => fn(), time)
   // clears delay
-  const clearDelay = () => clearTimeout(delay)
+  const clearDelay = () => clearTimeout(_delay)
   return clearDelay
 }
 
 // function that introduces jQuery dom manipulation syntax (selecting,adding & removing listeners) globally
 // () -> void
-utils.initiate$ = () => {
+export const initiate$ = () => {
   // check if window has $ property to avoid interfering with other modules
   if (window && window.$) {
     console.warn(
@@ -95,5 +91,3 @@ utils.initiate$ = () => {
     },
   })
 }
-
-export default utils

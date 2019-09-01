@@ -1,5 +1,5 @@
 /* eslint-env node, jest */
-import utils from './utils'
+import { createEvent, delay, delayWithControls, initiate$ } from './utils'
 
 /*
  *HELPERS & MOCKS
@@ -25,7 +25,6 @@ const simulateClick = el => {
   return el
 }
 
-const { createEvent, delay, delayWithControls, initiate$ } = utils
 
 /*
  *TEST SECTION
