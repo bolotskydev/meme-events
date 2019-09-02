@@ -6,9 +6,9 @@
   "scripts": {
     "clean": "rimraf dist",
     "test": "yarn test:unit && yarn test:int",
-    "test:unit": "jest src/**/*.unit.test.js --config=jest.config.js --colors",
+    "test:unit": "jest src --testFileExtensions='*.unit.test.js' --config=jest.config.js --colors",
+    "test:watch": "jest src --testFileExtensions='*.unit.test.js' --config=jest.config.js --colors --watch",
     "test:int": "jest tests/**/*.int.test.js --config=jest.config.js --colors",
-    "test:watch": "jest src/**/*.unit.test.js --watch --config=jest.config.js",
     "lint": "eslint src test",
     "format": "prettier --check 'src/**/*.{css,js}'",
     "build": "webpack --progress",

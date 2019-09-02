@@ -15,6 +15,7 @@ yarn.lock
 # project files
 src
 test
+__mocks__
 examples
 CHANGELOG.md
 .travis.yml
@@ -27,7 +28,6 @@ CHANGELOG.md
 jest.config.js
 postcss.config.js
 webpack.config.js
-mocha-compilers-ignore.js
 .babelrc
 .gitignore
 
