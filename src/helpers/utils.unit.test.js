@@ -25,6 +25,16 @@ const simulateClick = el => {
   return el
 }
 
+// clean up changes after initiate$
+const cleanUpAfterInitiate$ = () => {
+  window.$ = undefined
+  window.on = undefined
+  window.off = undefined
+  Node.prototype.on = undefined
+  Node.prototype.off = undefined
+  NodeList.prototype.on = undefined
+  NodeList.prototype.off = undefined
+}
 
 /*
  *TEST SECTION
@@ -114,6 +124,8 @@ describe('UTILS UNIT TEST SUIT', () => {
   })
   describe('initiate$ function testing', () => {
     beforeAll(() => {
+      // set up simple html page via jsdom lib
+      // for correct handling $ test cases
       document.body.innerHTML = `
           <h1 class="title" id="solo">Single</h1>
           <ul class="itemHolder">
@@ -122,44 +134,47 @@ describe('UTILS UNIT TEST SUIT', () => {
             <li class="item">Multiple 3</li> 
           </ul>`
     })
+    beforeEach(() => {
+      initiate$()
+    })
+    afterEach(() => {
+      cleanUpAfterInitiate$()
+    })
     describe('--initiation phase tests', () => {
       test('must send warn message to console if window.$ already exists and skip next evaluation steps', () => {
+        cleanUpAfterInitiate$()
         window.$ = () => 'stub'
         initiate$()
         expect(global.console.warn).toBeCalled()
         expect(global.console.warn).toHaveBeenCalledTimes(1)
         expect(window.$()).toEqual('stub')
-        // reset window.$ in order to run the rest of the suit properly
-        window.$ = undefined
+        expect(window.on).not.toBeDefined()
+        expect(window.off).not.toBeDefined()
+        expect(Node.prototype.on).not.toBeDefined()
+        expect(Node.prototype.off).not.toBeDefined()
+        expect(NodeList.prototype.on).not.toBeDefined()
+        expect(NodeList.prototype.off).not.toBeDefined()
       })
-      test('window object contains $ method after fn initialization', () => {
-        initiate$()
+      test('window object contains $, on and off methods after fn initialization', () => {
         expect(window.$).toBeDefined()
-      })
-      test('window object contains on method after fn initialization', () => {
         expect(window.on).toBeDefined()
-      })
-      test('window object contains off method after initialization', () => {
         expect(window.off).toBeDefined()
       })
-      test('Node.prototype.on exists after initialization', () => {
+      test('Node.prototype.(on|off) exists after initialization', () => {
         expect(Node.prototype.on).toBeDefined()
-      })
-      test('Node.prototype.off exists after initialization', () => {
         expect(Node.prototype.off).toBeDefined()
       })
-      test('NodeList.prototype.on exists after initialization', () => {
+      test('NodeList.prototype.(on|off) exists after initialization', () => {
         expect(NodeList.prototype.on).toBeDefined()
-      })
-      test('NodeList.prototype.off exists after initialization', () => {
         expect(NodeList.prototype.off).toBeDefined()
       })
     })
     describe('--core functionality tests', () => {
-      // set up simple html page via jsdom lib
-      // for correct handling $ test cases
       beforeAll(() => {
         initiate$()
+      })
+      afterAll(() => {
+        cleanUpAfterInitiate$()
       })
       test('must throw an Error if no selector was passed', () => {
         expect(() => $()).toThrow()

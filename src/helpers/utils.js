@@ -18,10 +18,10 @@ export const delay = fn => time => setTimeout(() => fn(), time)
 // (fn: Function) -> (time: Number) -> Function
 export const delayWithControls = fn => time => {
   // runs delay
-  const _delay = setTimeout(() => fn(), time)
+  const delayInitiate = setTimeout(() => fn(), time)
   // clears delay
-  const clearDelay = () => clearTimeout(_delay)
-  return clearDelay
+  const clearDelayInitiate = () => clearTimeout(delayInitiate)
+  return clearDelayInitiate
 }
 
 // function that introduces jQuery dom manipulation syntax (selecting,adding & removing listeners) globally
@@ -61,12 +61,15 @@ export const initiate$ = () => {
   Object.defineProperties(window, {
     $: {
       value: $,
+      writable: true
     },
     on: {
       value: on,
+      writable: true
     },
     off: {
       value: off,
+      writable: true
     },
   })
   /*
@@ -76,18 +79,22 @@ export const initiate$ = () => {
   Object.defineProperties(Node.prototype, {
     on: {
       value: on,
+      writable: true
     },
     off: {
       value: off,
+      writable: true
     },
   })
   // add methods to the prototype
   Object.defineProperties(NodeList.prototype, {
     on: {
       value: onForList,
+      writable: true
     },
     off: {
       value: offForList,
+      writable: true
     },
   })
 }
