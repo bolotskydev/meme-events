@@ -11,7 +11,7 @@ import {
   delayWithControls,
   initiate$,
   createEvent,
-  removeNode
+  removeNode,
 } from '../../helpers/utils'
 // assets
 import toBeContinuedTrack from './assets/roundabout.mp3'
