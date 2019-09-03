@@ -5,8 +5,16 @@
  * ===============================================
  */
 
+/* global $ */
+
 // deps
-import {removeNode, delay, delayWithControls, initiate$, createEvent} from '../../helpers/utils'
+import {
+  removeNode,
+  delay,
+  delayWithControls,
+  initiate$,
+  createEvent,
+} from '../../helpers/utils'
 
 // assets
 import creditsMemeEventTrack from './assets/credits.mp3'
@@ -14,7 +22,6 @@ import creditsMemeEventStyles from './assets/creditsMemeEvent.css'
 
 // introduce jQuery-like syntax
 initiate$()
-/* global $ */
 
 /*
  * ==============================
@@ -34,14 +41,14 @@ export const runCreditsTitles = () => {
   // save backdrop element into a variable
   const backdrop = $('.credits__backdrop')[0]
   // change titles 1 step
-   delay(() => {
+  delay(() => {
     backdrop.innerHTML = `
       <h1>Executive Producer</h1>
       <p>larry david</p>
     `
   })(1000)
   // change titles 2 step
-   delay(() => {
+  delay(() => {
     backdrop.innerHTML = `
       <h1>Executive Producer</h1>
       <p>jeff garlin</p>
@@ -51,7 +58,7 @@ export const runCreditsTitles = () => {
 
 // creates backdrop element and appends it to a body
 // () -> void
-export const createCreditsBackdrop = () => {
+export const addCreditsBackdrop = () => {
   // prepare element structure
   const backdrop = document.createElement('div')
   backdrop.classList.add('credits__backdrop')
@@ -75,7 +82,7 @@ export const creditsCleanUp = () => {
 // () -> void
 export const addCreditsUI = () => {
   // create backdrop element and add it the body
-  createCreditsBackdrop()
+  addCreditsBackdrop()
   // run credits
   runCreditsTitles()
 }
@@ -129,19 +136,18 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
   // wrap future execution steps in a callback of onloadedmetadata listener in order to get acces to a duration prop
   ringtone.onloadedmetadata = e => {
     // wrap UI step into delay and get controls
-    const clearAddUIWithDelay = () =>
-       delayWithControls(addCreditsUI)(1200)
+    const clearAddUIWithDelay = () => delayWithControls(addCreditsUI)(1200)
     // create onFinish Custom Event
-    const creditsOnFinish =  createEvent('credits', 'Finish', {
+    const creditsOnFinish = createEvent('credits', 'Finish', {
       bubbles: true,
     })
     // wrap finish step into delay and get clear fn back
     const clearRunFinishWithDelay = () =>
-       delayWithControls(creditsFinish(creditsOnFinish, fnOnFinish))(
+      delayWithControls(creditsFinish(creditsOnFinish, fnOnFinish))(
         e.target.duration * 1000
       )
     // create onStart Custom Event
-    const creditsOnStart =  createEvent('credits', 'Start', {
+    const creditsOnStart = createEvent('credits', 'Start', {
       bubbles: true,
       detail: {
         terminate: creditsTerminate(ringtone, fnOnFinish, creditsOnFinish, [

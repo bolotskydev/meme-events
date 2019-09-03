@@ -1,7 +1,6 @@
 import {
   removeToBeContinuedUI,
   addToBeContinuedArrow,
-  toBeContinuedCleanUp,
 } from './toBeContinuedMemeEvent'
 
 /* eslint-env node, jest */
