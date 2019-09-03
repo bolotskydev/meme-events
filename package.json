@@ -7,6 +7,7 @@
     "clean": "rimraf dist",
     "test": "yarn test:unit && yarn test:int",
     "test:unit": "jest src --testFileExtensions='*.unit.test.js' --config=jest.config.js --colors",
+    "test:cover": "jest src --testFileExtensions='*.unit.test.js' --config=jest.config.js --colors --collectCoverage",
     "test:watch": "jest src --testFileExtensions='*.unit.test.js' --config=jest.config.js --colors --watch",
     "test:int": "jest tests/**/*.int.test.js --config=jest.config.js --colors",
     "lint": "eslint src test",

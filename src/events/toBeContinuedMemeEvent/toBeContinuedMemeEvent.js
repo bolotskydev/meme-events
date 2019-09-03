@@ -11,6 +11,7 @@ import {
   delayWithControls,
   initiate$,
   createEvent,
+  removeNode
 } from '../../helpers/utils'
 // assets
 import toBeContinuedTrack from './assets/roundabout.mp3'
@@ -39,7 +40,7 @@ export const removeToBeContinuedUI = () => {
     // proceed to eliminate UI with delay for animation purpose
     delay(() => {
       // remove arrow element
-      $('body')[0].removeChild(arrow)
+      removeNode(arrow)
       // remove styling class from body
       $('body')[0].classList.remove('toBeContinued--colorScheme')
     })(500)

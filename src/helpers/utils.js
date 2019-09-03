@@ -61,15 +61,15 @@ export const initiate$ = () => {
   Object.defineProperties(window, {
     $: {
       value: $,
-      writable: true
+      writable: true,
     },
     on: {
       value: on,
-      writable: true
+      writable: true,
     },
     off: {
       value: off,
-      writable: true
+      writable: true,
     },
   })
   /*
@@ -79,22 +79,32 @@ export const initiate$ = () => {
   Object.defineProperties(Node.prototype, {
     on: {
       value: on,
-      writable: true
+      writable: true,
     },
     off: {
       value: off,
-      writable: true
+      writable: true,
     },
   })
   // add methods to the prototype
   Object.defineProperties(NodeList.prototype, {
     on: {
       value: onForList,
-      writable: true
+      writable: true,
     },
     off: {
       value: offForList,
-      writable: true
+      writable: true,
     },
   })
+}
+
+// takes an css selector and removes it from its parent
+// removeNode(toBeRemoved: String | Node) -> null | void
+export const removeNode = (toBeRemoved = '__dontexist__') => {
+  if (!(toBeRemoved instanceof Node) && typeof toBeRemoved !== 'string') return
+  if (typeof toBeRemoved === 'string') {
+    toBeRemoved = document.querySelector(toBeRemoved)
+  }
+  toBeRemoved && toBeRemoved.parentNode.removeChild(toBeRemoved)
 }

@@ -1,5 +1,11 @@
 /* eslint-env node, jest */
-import { createEvent, delay, delayWithControls, initiate$ } from './utils'
+import {
+  createEvent,
+  delay,
+  delayWithControls,
+  initiate$,
+  removeNode,
+} from './utils'
 
 /*
  *HELPERS & MOCKS
@@ -40,12 +46,13 @@ const cleanUpAfterInitiate$ = () => {
  *TEST SECTION
  */
 
+// setup
+// native function to be passed for testing purpose
+const callback = jest.fn()
+// amount of time passed function should be invoked after
+const time = 1000
+
 describe('UTILS UNIT TEST SUIT', () => {
-  // setup
-  // native function to be passed for testing purpose
-  const callback = jest.fn()
-  // amount of time passed function should be invoked after
-  const time = 1000
   // test delay fn
   describe('delay function testing', () => {
     test('delay invokes passed fn once right after passed amount of time', () => {
@@ -265,6 +272,47 @@ describe('UTILS UNIT TEST SUIT', () => {
         all.forEach(node => simulateClick(node))
         expect(callback).not.toBeCalled()
       })
+    })
+  })
+  describe('removeNode fn testing', () => {
+    let snapshot
+    beforeEach(() => {
+      document.body.innerHTML = `
+          <h1 class="title">
+          </h1>
+          <p id="first">whatwg</p>
+          <p id="second">whatwg</p>`
+      snapshot = document.body.innerHTML
+    })
+    test('should not throw an error if no selector passed', () => {
+      expect(() => removeNode()).not.toThrow()
+    })
+    test('does nothing if passed selector matches no element or absent', () => {
+      removeNode()
+      expect(document.body.innerHTML).toBe(snapshot)
+      removeNode('#nosuchelement')
+      expect(document.body.innerHTML).toBe(snapshot)
+    })
+    test('should have correctly removed matched node', () => {
+      removeNode('#first')
+      expect(document.getElementById('first')).toBeNull()
+    })
+    test('should remove first matched node if selector matches multiple nodes', () => {
+      removeNode('p')
+      expect(document.getElementById('first')).toBeNull()
+      expect(document.getElementById('second')).toBeDefined()
+    })
+    test('does nothing if passed something other that string or Node', () => {
+      removeNode({ try: 'delete' })
+      removeNode([])
+      removeNode(() => {})
+      expect(document.body.innerHTML).toBe(snapshot)
+    })
+    test('should have correctly removed passed Node', () => {
+      removeNode(document.body.querySelector('#first'))
+      expect(document.body.querySelector('#first')).toBeNull()
+      expect(document.body.querySelector('#second')).toBeDefined()
+      expect(document.body.innerHTML).not.toEqual(snapshot)
     })
   })
 })

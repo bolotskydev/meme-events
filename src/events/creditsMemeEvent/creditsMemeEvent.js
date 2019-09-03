@@ -6,7 +6,7 @@
  */
 
 // deps
-import {delay, delayWithControls, initiate$, createEvent} from '../../helpers/utils'
+import {removeNode, delay, delayWithControls, initiate$, createEvent} from '../../helpers/utils'
 
 // assets
 import creditsMemeEventTrack from './assets/credits.mp3'
@@ -25,7 +25,7 @@ initiate$()
 // removes credits UI
 // () -> void
 export const removeCreditsUI = () => {
-  $('body')[0].removeChild($('.credits__backdrop')[0])
+  removeNode($('.credits__backdrop')[0])
 }
 
 // runs credits titles
