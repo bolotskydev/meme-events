@@ -1,4 +1,8 @@
 import { addCreditsBackdrop, runCreditsTitles } from './creditsMemeEvent'
+import { initiate$ } from '../../helpers/utils'
+
+// events dependency
+initiate$()
 
 /* eslint-env node, jest */
 /* global $ */
@@ -37,8 +41,5 @@ describe('test suit for creditsMemeEvent', () => {
       expect(setTimeout).toHaveBeenCalledTimes(2)
       expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 2000)
     })
-    test.todo(
-      'structure changes after 2s delay one more time, changes are valid'
-    )
   })
 })

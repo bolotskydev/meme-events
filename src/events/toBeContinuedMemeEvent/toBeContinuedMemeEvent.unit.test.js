@@ -2,6 +2,10 @@ import {
   removeToBeContinuedUI,
   addToBeContinuedArrow,
 } from './toBeContinuedMemeEvent'
+import { initiate$ } from '../../helpers/utils'
+
+// event dependency
+initiate$()
 
 /* eslint-env node, jest */
 jest.resetModules()

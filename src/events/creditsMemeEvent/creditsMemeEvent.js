@@ -21,7 +21,7 @@ import creditsMemeEventTrack from './assets/credits.mp3'
 import creditsMemeEventStyles from './assets/creditsMemeEvent.css'
 
 // introduce jQuery-like syntax
-initiate$()
+/* initiate$() */
 
 /*
  * ==============================

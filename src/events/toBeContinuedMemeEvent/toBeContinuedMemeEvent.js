@@ -9,7 +9,7 @@
 import {
   delay,
   delayWithControls,
-  initiate$,
+  /* initiate$, */
   createEvent,
   removeNode,
 } from '../../helpers/utils'
@@ -18,7 +18,7 @@ import toBeContinuedTrack from './assets/roundabout.mp3'
 import toBeContinuedMemeEventStyles from './assets/toBeContinuedMemeEvent.css'
 
 // introduce jQuery-like syntax
-initiate$()
+/* initiate$() */
 
 /* global $ */
 
@@ -71,10 +71,12 @@ export const addToBeContinuedArrow = () => {
 // clear memes prints
 // () -> void
 export const toBeContinuedCleanUp = () => {
-  // remove state mark
-  $('body')[0].classList.remove('toBeContinued--activated')
-  // remove meme event UI
-  removeToBeContinuedUI()
+  if ($('body')[0].classList.contains('toBeContinued--activated')) {
+    // remove state class
+    $('body')[0].classList.remove('toBeContinued--activated')
+    // remove meme event UI
+    removeToBeContinuedUI()
+  }
 }
 
 // add toBeContinued UI
@@ -93,9 +95,11 @@ export const addToBeContinuedUI = () => {
  */
 
 // runs finish procedure
-// (toBeContinuedFinish: Event, fnOnFinish: Function) -> () -> void
+// (toBeContinuedFinish: Event, fnOnFinish?: Function) -> () -> void
 export const toBeContinuedFinish = (
-  toBeContinuedOnFinish,
+  toBeContinuedOnFinish = new CustomEvent('DefaultMemeEventOnFinish', {
+    bubbles: true,
+  }),
   fnOnFinish
 ) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
