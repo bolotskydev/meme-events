@@ -18,6 +18,12 @@ initiate$()
 // jest native timer mocking
 jest.useFakeTimers()
 
+// jest Callback mocking
+const mockCallbackWithLog = jest.fn(() =>
+  console.log('mockCallback has been invoked')
+)
+const mockCallback = jest.fn()
+
 // local helpers
 const resetBody = () => {
   document.body.innerHTML = `
@@ -83,7 +89,6 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
       expect(() => toBeContinuedFinish()()).not.toThrow()
     })
     test('does nothing if body has no *--activated class', () => {
-      document.body.classList.forEach(cl => console.log(cl))
       expect(
         $('body')[0].classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
@@ -118,10 +123,23 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
         $('body')[0].classList.contains('toBeContinued--activated')
       ).toBeFalsy()
     })
-    test.todo('dispatches default CustomEvent if no params passed')
-    test.todo('dispatches passed CustomEvent ')
-    test.todo('dispatches passed CustomEvent ')
-    test.todo('does run fnOnFinish if specified ')
+    test('dispatches default CustomEvent if no params passed', () => {
+      $('body')[0].on('DefaultMemeEventOnFinish', mockCallback)
+      toBeContinuedFinish()()
+      expect(mockCallback).toBeCalled()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
+    })
+    test('dispatches passed CustomEvent', () => {
+      $('body')[0].on('TestEvent', mockCallback)
+      toBeContinuedFinish(testEvent)()
+      expect(mockCallback).toBeCalled()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
+    })
+    test('does run fnOnFinish once if specified', () => {
+      toBeContinuedFinish(undefined, mockCallbackWithLog)()
+      expect(mockCallbackWithLog).toBeCalled()
+      expect(mockCallbackWithLog).toHaveBeenCalledTimes(1)
+    })
   })
   describe('--toBeContinuedTerminate fn testing', () => {
     test.todo('write tests for tbc terminate ')

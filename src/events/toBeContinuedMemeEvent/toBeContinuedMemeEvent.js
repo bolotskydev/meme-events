@@ -101,7 +101,7 @@ export const toBeContinuedFinish = (
   toBeContinuedOnFinish = new CustomEvent('DefaultMemeEventOnFinish', {
     bubbles: true,
   }),
-  fnOnFinish
+  fnOnFinish = false
 ) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
   if ($('body')[0].classList.contains('toBeContinued--activated')) {
