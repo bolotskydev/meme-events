@@ -103,14 +103,10 @@ export const initiate$ = () => {
 // removeNode(toBeRemoved: String | Node) -> void
 export const removeNode = (toBeRemoved = '__dontexist__') => {
   let temp = toBeRemoved
-  if (
-    (!(temp instanceof Node) && typeof temp !== 'string') ||
-    toBeRemoved.length === 0
-  ) {
-    return
-  }
-  if (typeof temp === 'string') {
+  if (typeof temp === 'string' && temp.length > 0) {
     temp = document.querySelector(temp)
+    temp && temp.parentNode.removeChild(temp)
+  } else if (temp instanceof Node) {
+    temp.parentNode && temp.parentNode.removeChild(temp)
   }
-  temp && temp.parentNode.removeChild(temp)
 }

@@ -83,6 +83,13 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
       expect(() => toBeContinuedFinish()()).not.toThrow()
     })
     test('does nothing if body has no *--activated class', () => {
+      document.body.classList.forEach(cl => console.log(cl))
+      expect(
+        $('body')[0].classList.contains('toBeContinued--colorScheme')
+      ).toBeTruthy()
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeTruthy()
       $('body')[0].classList.remove('toBeContinued--activated')
       expect(
         $('body')[0].classList.contains('toBeContinued--activated')
@@ -93,26 +100,24 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
         $('body')[0].classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
     })
-    /*
-     *test('runs toBeContinuedCleanUp', () => {
-     *  expect($('#toBeContinued__arrow').length).toBe(1)
-     *  expect(
-     *    $('body')[0].classList.contains('toBeContinued--colorScheme')
-     *  ).toBeTruthy()
-     *  expect(
-     *    $('body')[0].classList.contains('toBeContinued--activated')
-     *  ).toBeTruthy()
-     *  toBeContinuedFinish()()
-     *  jest.runAllTimers()
-     *  expect($('#toBeContinued__arrow').length).toBe(0)
-     *  expect(
-     *    $('body')[0].classList.contains('toBeContinued--colorScheme')
-     *  ).toBeFalsy()
-     *  expect(
-     *    $('body')[0].classList.contains('toBeContinued--activated')
-     *  ).toBeFalsy()
-     *})
-     */
+    test('runs toBeContinuedCleanUp', () => {
+      expect($('#toBeContinued__arrow').length).toBe(1)
+      expect(
+        $('body')[0].classList.contains('toBeContinued--colorScheme')
+      ).toBeTruthy()
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeTruthy()
+      toBeContinuedFinish()()
+      jest.runAllTimers()
+      expect($('#toBeContinued__arrow').length).toBe(0)
+      expect(
+        $('body')[0].classList.contains('toBeContinued--colorScheme')
+      ).toBeFalsy()
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeFalsy()
+    })
     test.todo('dispatches default CustomEvent if no params passed')
     test.todo('dispatches passed CustomEvent ')
     test.todo('dispatches passed CustomEvent ')
