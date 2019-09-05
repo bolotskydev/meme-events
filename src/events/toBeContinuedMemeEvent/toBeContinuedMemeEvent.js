@@ -17,6 +17,7 @@ import {
 import toBeContinuedTrack from './assets/roundabout.mp3'
 import toBeContinuedMemeEventStyles from './assets/toBeContinuedMemeEvent.css'
 
+// @TODO: currently this fn represented only once in entry point instead of every instance events
 // introduce jQuery-like syntax
 /* initiate$() */
 
@@ -160,12 +161,11 @@ export const toBeContinuedMemeEvent = ({
     const toBeContinuedOnStart = createEvent('toBeContinued', 'Start', {
       bubbles: true,
       detail: {
-        terminate: toBeContinuedTerminate(
-          ringtone,
-          fnOnFinish,
-          toBeContinuedOnFinish,
-          [clearAddUIWithDelay(), clearRunFinishWithDelay()]
-        ),
+        terminate: () =>
+          toBeContinuedTerminate(ringtone, fnOnFinish, toBeContinuedOnFinish, [
+            clearAddUIWithDelay(),
+            clearRunFinishWithDelay(),
+          ]),
       },
     })
     // dispatch custom event toBeContinuedStart

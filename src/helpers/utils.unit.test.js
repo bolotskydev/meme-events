@@ -284,14 +284,15 @@ describe('UTILS UNIT TEST SUIT', () => {
           <p id="second">whatwg</p>`
       snapshot = document.body.innerHTML
     })
-    test('should not throw an error if no selector passed', () => {
+    test('should not throw an error if wrong, empty or no string whatsoever passed', () => {
       expect(() => removeNode()).not.toThrow()
+      expect(() => removeNode('')).not.toThrow()
+      expect(() => removeNode('#nosuchelement')).not.toThrow()
     })
-    test('does nothing if passed selector matches no element or absent', () => {
-      removeNode()
-      expect(document.body.innerHTML).toBe(snapshot)
-      removeNode('#nosuchelement')
-      expect(document.body.innerHTML).toBe(snapshot)
+    test('should not throw if passed argument is other than string', () => {
+      expect(() => removeNode({ try: 'delete' })).not.toThrow()
+      expect(() => removeNode([])).not.toThrow()
+      expect(() => removeNode(() => {})).not.toThrow()
     })
     test('should have correctly removed matched node', () => {
       removeNode('#first')
@@ -302,13 +303,7 @@ describe('UTILS UNIT TEST SUIT', () => {
       expect(document.getElementById('first')).toBeNull()
       expect(document.getElementById('second')).toBeDefined()
     })
-    test('does nothing if passed something other that string or Node', () => {
-      removeNode({ try: 'delete' })
-      removeNode([])
-      removeNode(() => {})
-      expect(document.body.innerHTML).toBe(snapshot)
-    })
-    test('should have correctly removed passed Node', () => {
+    test('should have correctly removed passed single Node', () => {
       removeNode(document.body.querySelector('#first'))
       expect(document.body.querySelector('#first')).toBeNull()
       expect(document.body.querySelector('#second')).toBeDefined()

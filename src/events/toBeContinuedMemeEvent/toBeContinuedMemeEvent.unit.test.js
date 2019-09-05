@@ -1,18 +1,18 @@
+/* eslint-env node, jest */
+/* global $ */
+
 import {
   removeToBeContinuedUI,
   addToBeContinuedArrow,
 } from './toBeContinuedMemeEvent'
+// import event dep
 import { initiate$ } from '../../helpers/utils'
 
-// event dependency
+// inroduce jQuery-like syntax
 initiate$()
-
-/* eslint-env node, jest */
-jest.resetModules()
-jest.clearAllMocks()
+// jest native timer mocking
 jest.useFakeTimers()
 
-/* global $ */
 
 describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
   describe('--helpers function tests', () => {

@@ -100,11 +100,17 @@ export const initiate$ = () => {
 }
 
 // takes an css selector and removes it from its parent
-// removeNode(toBeRemoved: String | Node) -> null | void
+// removeNode(toBeRemoved: String | Node) -> void
 export const removeNode = (toBeRemoved = '__dontexist__') => {
-  if (!(toBeRemoved instanceof Node) && typeof toBeRemoved !== 'string') return
-  if (typeof toBeRemoved === 'string') {
-    toBeRemoved = document.querySelector(toBeRemoved)
+  let temp = toBeRemoved
+  if (
+    (!(temp instanceof Node) && typeof temp !== 'string') ||
+    toBeRemoved.length === 0
+  ) {
+    return
   }
-  toBeRemoved && toBeRemoved.parentNode.removeChild(toBeRemoved)
+  if (typeof temp === 'string') {
+    temp = document.querySelector(temp)
+  }
+  temp && temp.parentNode.removeChild(temp)
 }
