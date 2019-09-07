@@ -17,7 +17,6 @@ import {
 import toBeContinuedTrack from './assets/roundabout.mp3'
 import toBeContinuedMemeEventStyles from './assets/toBeContinuedMemeEvent.css'
 
-// @TODO: currently this fn represented only once in entry point instead of every instance events
 // introduce jQuery-like syntax
 /* initiate$() */
 
@@ -101,7 +100,7 @@ export const toBeContinuedFinish = (
   toBeContinuedOnFinish = new CustomEvent('DefaultMemeEventOnFinish', {
     bubbles: true,
   }),
-  fnOnFinish = false
+  fnOnFinish
 ) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
   if ($('body')[0].classList.contains('toBeContinued--activated')) {
@@ -115,12 +114,12 @@ export const toBeContinuedFinish = (
 }
 
 // fn that interrupts active toBeContinued meme event if called
-// (ringtone: AudioElement, fnOnFinish: Function, toBeContinuedOnFinish: Event, terminationFns: [...Arry]) -> Function -> void
+// (ringtone: AudioElement,  toBeContinuedOnFinish: Event, terminationFns: [...Arry], fnOnFinish: Function,) -> Function -> void
 export const toBeContinuedTerminate = (
   ringtone,
-  fnOnFinish,
   toBeContinuedOnFinish,
-  terminationFns
+  terminationFns,
+  fnOnFinish
 ) => () => {
   // stop playing audio
   ringtone.pause()
@@ -144,8 +143,8 @@ export const toBeContinuedMemeEvent = ({
   // serves as a state for the terminate function
   $('body')[0].classList.add('toBeContinued--activated')
   // wrap future execution steps in a callback of onloadedmetadata listener in order to work with duration prop
-  ringtone.onloadedmetadata = e => {
-    // wrap UI step into delay helper and get timeout control back
+  ringtone.on('loadedmetadata', e => {
+    // wrap UI render step into the delay helper and get timeout control back
     const clearAddUIWithDelay = () =>
       delayWithControls(addToBeContinuedUI)(4000)
     // create onFinish Custom Event
@@ -162,17 +161,21 @@ export const toBeContinuedMemeEvent = ({
       bubbles: true,
       detail: {
         terminate: () =>
-          toBeContinuedTerminate(ringtone, fnOnFinish, toBeContinuedOnFinish, [
-            clearAddUIWithDelay(),
-            clearRunFinishWithDelay(),
-          ]),
+          toBeContinuedTerminate(
+            ringtone,
+            toBeContinuedOnFinish,
+            // yes they meant to be invoked here in order to run returned cleaners
+            // and more important to initiate Finish stage burried inside
+            [clearAddUIWithDelay(), clearRunFinishWithDelay()],
+            fnOnFinish
+          ),
       },
     })
     // dispatch custom event toBeContinuedStart
     $('body')[0].dispatchEvent(toBeContinuedOnStart)
     // run optional onStart fn if exists
     fnOnStart && fnOnStart()
-  }
+  })
   // activate ringtone
   ringtone.play()
 }

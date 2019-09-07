@@ -19,9 +19,6 @@ initiate$()
 jest.useFakeTimers()
 
 // jest Callback mocking
-const mockCallbackWithLog = jest.fn(() =>
-  console.log('mockCallback has been invoked')
-)
 const mockCallback = jest.fn()
 
 // local helpers
@@ -42,6 +39,9 @@ const resetBody = () => {
   )
 }
 const testEvent = new CustomEvent('TestEvent', { bubbles: true })
+const ringtoneStub = {
+  pause: jest.fn(),
+}
 
 describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
   describe('--toBeContinuedCleanUp fn testing', () => {
@@ -128,23 +128,102 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
       toBeContinuedFinish()()
       expect(mockCallback).toBeCalled()
       expect(mockCallback).toHaveBeenCalledTimes(1)
+      $('body')[0].off('DefaultMemeEventOnFinish', mockCallback)
     })
     test('dispatches passed CustomEvent', () => {
       $('body')[0].on('TestEvent', mockCallback)
       toBeContinuedFinish(testEvent)()
       expect(mockCallback).toBeCalled()
       expect(mockCallback).toHaveBeenCalledTimes(1)
+      $('body')[0].off('TestEvent', mockCallback)
     })
     test('does run fnOnFinish once if specified', () => {
-      toBeContinuedFinish(undefined, mockCallbackWithLog)()
-      expect(mockCallbackWithLog).toBeCalled()
-      expect(mockCallbackWithLog).toHaveBeenCalledTimes(1)
+      toBeContinuedFinish(undefined, mockCallback)()
+      expect(mockCallback).toBeCalled()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
     })
   })
   describe('--toBeContinuedTerminate fn testing', () => {
-    test.todo('write tests for tbc terminate ')
+    beforeEach(() => {
+      resetBody()
+    })
+    test('runs .pause method on passed Audio object', () => {
+      toBeContinuedTerminate(ringtoneStub, testEvent, [], undefined)()
+      expect(ringtoneStub.pause).toHaveBeenCalledTimes(1)
+    })
+    test('runs terminationFns if passed array length == 1', () => {
+      toBeContinuedTerminate(
+        ringtoneStub,
+        testEvent,
+        [mockCallback],
+        undefined
+      )()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
+    })
+    test('runs terminationFns if passed array length > 1', () => {
+      toBeContinuedTerminate(
+        ringtoneStub,
+        testEvent,
+        [mockCallback, mockCallback, mockCallback],
+        undefined
+      )()
+      expect(mockCallback).toBeCalled()
+      expect(mockCallback).toHaveBeenCalledTimes(3)
+    })
+    test('runs toBeContinuedOnFinish with only event arg', () => {
+      toBeContinuedTerminate(
+        ringtoneStub,
+        testEvent,
+        [mockCallback, mockCallback],
+        undefined
+      )()
+      expect(mockCallback).toHaveBeenCalledTimes(2)
+    })
+    test('runs toBeContinuedOnFinish with both arguments', () => {
+      toBeContinuedTerminate(ringtoneStub, testEvent, [], mockCallback)()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
+    })
   })
   describe('--toBeContinuedMemeEvent fn testing', () => {
-    test.todo('write tests for tbc main fn')
+    beforeEach(() => {
+      document.body.innerHTML = `
+    <h1>tBC Integration testing </h1> 
+  `
+      document.body.classList = []
+      HTMLMediaElement.prototype.play = jest.fn(function() {
+        this.dispatchEvent(new Event('loadedmetadata', { bubbles: true }))
+      })
+      HTMLMediaElement.prototype.pause = jest.fn()
+    })
+    test('does not run if body has --activated class', () => {
+      $('body')[0].classList.add('toBeContinued--activated')
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeTruthy()
+      toBeContinuedMemeEvent()()
+      jest.runAllTimers()
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeTruthy()
+      expect(HTMLMediaElement.prototype.play).not.toBeCalled()
+    })
+    test('does run if body has no --activated class', () => {
+      $('body')[0].on('toBeContinuedOnStart', mockCallback)
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeFalsy()
+      toBeContinuedMemeEvent()()
+      expect(
+        $('body')[0].classList.contains('toBeContinued--activated')
+      ).toBeTruthy()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
+      $('body')[0].off('toBeContinuedOnStart', mockCallback)
+    })
+    test('does run the fnOnStart if passed', () => {
+      toBeContinuedMemeEvent({ fnOnStart: mockCallback })()
+      expect(mockCallback).toHaveBeenCalledTimes(1)
+    })
+    // @TODO
+    // unable to test many other cases: unreachable code structure for now
   })
 })
