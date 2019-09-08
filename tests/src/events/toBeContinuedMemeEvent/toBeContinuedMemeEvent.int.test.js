@@ -39,9 +39,7 @@ const resetBody = () => {
   )
 }
 const testEvent = new CustomEvent('TestEvent', { bubbles: true })
-const ringtoneStub = {
-  pause: jest.fn(),
-}
+const ringtoneStub = document.createElement('audio')
 
 describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
   describe('--toBeContinuedCleanUp fn testing', () => {
@@ -146,10 +144,12 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
   describe('--toBeContinuedTerminate fn testing', () => {
     beforeEach(() => {
       resetBody()
+      HTMLMediaElement.prototype.play = mockCallback
+      HTMLMediaElement.prototype.pause = mockCallback
     })
     test('runs .pause method on passed Audio object', () => {
       toBeContinuedTerminate(ringtoneStub, testEvent, [], undefined)()
-      expect(ringtoneStub.pause).toHaveBeenCalledTimes(1)
+      expect(mockCallback).toHaveBeenCalledTimes(1)
     })
     test('runs terminationFns if passed array length == 1', () => {
       toBeContinuedTerminate(
@@ -158,7 +158,7 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
         [mockCallback],
         undefined
       )()
-      expect(mockCallback).toHaveBeenCalledTimes(1)
+      expect(mockCallback).toHaveBeenCalledTimes(2)
     })
     test('runs terminationFns if passed array length > 1', () => {
       toBeContinuedTerminate(
@@ -168,7 +168,7 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
         undefined
       )()
       expect(mockCallback).toBeCalled()
-      expect(mockCallback).toHaveBeenCalledTimes(3)
+      expect(mockCallback).toHaveBeenCalledTimes(4)
     })
     test('runs toBeContinuedOnFinish with only event arg', () => {
       toBeContinuedTerminate(
@@ -177,11 +177,11 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
         [mockCallback, mockCallback],
         undefined
       )()
-      expect(mockCallback).toHaveBeenCalledTimes(2)
+      expect(mockCallback).toHaveBeenCalledTimes(3)
     })
     test('runs toBeContinuedOnFinish with both arguments', () => {
       toBeContinuedTerminate(ringtoneStub, testEvent, [], mockCallback)()
-      expect(mockCallback).toHaveBeenCalledTimes(1)
+      expect(mockCallback).toHaveBeenCalledTimes(2)
     })
   })
   describe('--toBeContinuedMemeEvent fn testing', () => {
@@ -193,7 +193,6 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
       HTMLMediaElement.prototype.play = jest.fn(function() {
         this.dispatchEvent(new Event('loadedmetadata', { bubbles: true }))
       })
-      HTMLMediaElement.prototype.pause = jest.fn()
     })
     test('does not run if body has --activated class', () => {
       $('body')[0].classList.add('toBeContinued--activated')

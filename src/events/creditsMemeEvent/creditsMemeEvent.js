@@ -12,7 +12,6 @@ import {
   removeNode,
   delay,
   delayWithControls,
-  initiate$,
   createEvent,
 } from '../../helpers/utils'
 
@@ -94,8 +93,13 @@ export const addCreditsUI = () => {
  */
 
 // run finish procedure
-// (creditsFinish: Event, fnOnFinish: Function) -> () -> void
-export const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
+// (creditsOnFinish: Event, fnOnFinish?: Function) -> () -> void
+export const creditsFinish = (
+  creditsOnFinish = new CustomEvent('DefaultCreditsMemeEvent', {
+    bubbles: true,
+  }),
+  fnOnFinish
+) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
   if ($('body')[0].classList.contains('credits--activated')) {
     // perform clean up
@@ -108,12 +112,12 @@ export const creditsFinish = (creditsOnFinish, fnOnFinish) => () => {
 }
 
 // fn that interrupts active credits meme event execution
-// (ringtone: AudioElement, fnOnFinish: Function, creditsOnFinish: Event, terminationFns: [...Arry]) -> Function -> void
+// (ringtone: AudioElement,  creditsOnFinish: Event, terminationFns: [...Arry], fnOnFinish?: Function,) -> Function -> void
 export const creditsTerminate = (
   ringtone,
-  fnOnFinish,
   creditsOnFinish,
-  terminationFns
+  terminationFns = [],
+  fnOnFinish
 ) => () => {
   // stop playing audio
   ringtone.pause()
@@ -125,7 +129,7 @@ export const creditsTerminate = (
 
 // main function of creditsMemeEvent
 // ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
-export const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
+export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('credits--activated')) return
   // create meme audio ringtone
@@ -134,7 +138,7 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
   // serves as state for the terminate function
   $('body')[0].classList.add('credits--activated')
   // wrap future execution steps in a callback of onloadedmetadata listener in order to get acces to a duration prop
-  ringtone.onloadedmetadata = e => {
+  ringtone.on('loadedmetadata', e => {
     // wrap UI step into delay and get controls
     const clearAddUIWithDelay = () => delayWithControls(addCreditsUI)(1200)
     // create onFinish Custom Event
@@ -160,7 +164,7 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish }) => () => {
     $('body')[0].dispatchEvent(creditsOnStart)
     // run optional onStart fn if exists
     fnOnStart && fnOnStart()
-  }
+  })
   // activate ringtone
   ringtone.play()
 }

@@ -118,7 +118,7 @@ export const toBeContinuedFinish = (
 export const toBeContinuedTerminate = (
   ringtone,
   toBeContinuedOnFinish,
-  terminationFns,
+  terminationFns=[],
   fnOnFinish
 ) => () => {
   // stop playing audio
