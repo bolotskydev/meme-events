@@ -7,10 +7,27 @@
 import { initiate$ } from './helpers/utils'
 
 // import available memes
-import toBeContinuedMemeEventSet from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
+import toBeContinuedMemeEvent from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
 
-import creditsMemeEventSet from './events/creditsMemeEvent/creditsMemeEvent'
+import creditsMemeEvent from './events/creditsMemeEvent/creditsMemeEvent'
 
-initiate$()
+// expose events direct to the window object in case of cdn
 
-export { toBeContinuedMemeEventSet, creditsMemeEventSet }
+;
+
+(() => {
+  initiate$()
+
+  Object.defineProperties({
+    toBeContinuedMemeEvent: {
+      value: toBeContinuedMemeEvent,
+      writable: false,
+    },
+    creditsMemeEvent: {
+      value: creditsMemeEvent,
+      writable: false,
+    },
+  })
+})()
+
+export { toBeContinuedMemeEvent, creditsMemeEvent }

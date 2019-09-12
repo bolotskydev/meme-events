@@ -14,8 +14,8 @@ import {
   removeNode,
 } from '../../helpers/utils'
 // assets
-import toBeContinuedTrack from './assets/roundabout.mp3'
 import toBeContinuedMemeEventStyles from './assets/toBeContinuedMemeEvent.css'
+
 
 // introduce jQuery-like syntax
 /* initiate$() */
@@ -118,7 +118,7 @@ export const toBeContinuedFinish = (
 export const toBeContinuedTerminate = (
   ringtone,
   toBeContinuedOnFinish,
-  terminationFns=[],
+  terminationFns = [],
   fnOnFinish
 ) => () => {
   // stop playing audio
@@ -138,7 +138,7 @@ export const toBeContinuedMemeEvent = ({
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
-  const ringtone = new Audio(toBeContinuedTrack)
+  const ringtone = new Audio('https://res.cloudinary.com/bolotskydev/video/upload/v1568294497/meme-events/roundabout.mp3')
   // add initial class to the body in order to prevent future meme activation
   // serves as a state for the terminate function
   $('body')[0].classList.add('toBeContinued--activated')
@@ -180,10 +180,4 @@ export const toBeContinuedMemeEvent = ({
   ringtone.play()
 }
 
-// aggregate for convenient export
-const toBeContinuedMemeEventSet = {
-  toBeContinuedMemeEvent,
-  toBeContinuedMemeEventStyles,
-}
-
-export default toBeContinuedMemeEventSet
+export default toBeContinuedMemeEvent
