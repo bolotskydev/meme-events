@@ -9,16 +9,12 @@
 import {
   delay,
   delayWithControls,
-  /* initiate$, */
   createEvent,
   removeNode,
 } from '../../helpers/utils'
-// assets
-import toBeContinuedMemeEventStyles from './assets/toBeContinuedMemeEvent.css'
 
-
-// introduce jQuery-like syntax
-/* initiate$() */
+// import css in order to be processed by webpack
+import toBeContinuedMemeEventStyles from './toBeContinuedMemeEvent.css'
 
 /* global $ */
 
@@ -138,7 +134,9 @@ export const toBeContinuedMemeEvent = ({
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
-  const ringtone = new Audio('https://res.cloudinary.com/bolotskydev/video/upload/v1568294497/meme-events/roundabout.mp3')
+  const ringtone = new Audio(
+    'https://res.cloudinary.com/bolotskydev/video/upload/v1568294497/meme-events/roundabout.mp3'
+  )
   // add initial class to the body in order to prevent future meme activation
   // serves as a state for the terminate function
   $('body')[0].classList.add('toBeContinued--activated')

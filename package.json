@@ -13,7 +13,7 @@
     "test:coverage": "jest '(tests|src)/.*/.*.(unit|int).test.js' --config=jest.config.js --colors --collectCoverage",
     "test:fn:chrome": "testcafe chromium-browser tests/memeEvents.fn.test.js",
     "test:fn:ff": "testcafe firefox tests/memeEvents.fn.test.js",
-    "lint": "eslint src test",
+    "lint": "eslint src tests",
     "format": "prettier --check 'src/**/*.{css,js}'",
     "build": "webpack --progress",
     "prepublish-old": "yarn clean && yarn format && yarn lint && yarn test && yarn build"

@@ -16,10 +16,7 @@ import {
 } from '../../helpers/utils'
 
 // assets
-import creditsMemeEventStyles from './assets/creditsMemeEvent.css'
-
-// introduce jQuery-like syntax
-/* initiate$() */
+import creditsMemeEventStyles from './creditsMemeEvent.css'
 
 /*
  * ==============================
@@ -132,7 +129,9 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('credits--activated')) return
   // create meme audio ringtone
-  const ringtone = new Audio('https://res.cloudinary.com/bolotskydev/video/upload/v1568286768/meme-events/credits.mp3')
+  const ringtone = new Audio(
+    'https://res.cloudinary.com/bolotskydev/video/upload/v1568286768/meme-events/credits.mp3'
+  )
   // add initial class to a body in order to prevent future meme activation
   // serves as state for the terminate function
   $('body')[0].classList.add('credits--activated')
