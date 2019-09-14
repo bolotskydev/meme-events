@@ -128,9 +128,9 @@ export const toBeContinuedTerminate = (
 // main event function
 // ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
 export const toBeContinuedMemeEvent = ({
-  fnOnStart,
-  fnOnFinish,
-} = {}) => () => {
+  fnOnStart = () => {},
+  fnOnFinish = () => {},
+}) => () => {
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
@@ -158,15 +158,14 @@ export const toBeContinuedMemeEvent = ({
     const toBeContinuedOnStart = createEvent('toBeContinued', 'Start', {
       bubbles: true,
       detail: {
-        terminate: () =>
-          toBeContinuedTerminate(
-            ringtone,
-            toBeContinuedOnFinish,
-            // yes they meant to be invoked here in order to run returned cleaners
-            // and more important to initiate Finish stage burried inside
-            [clearAddUIWithDelay(), clearRunFinishWithDelay()],
-            fnOnFinish
-          ),
+        terminate: toBeContinuedTerminate(
+          ringtone,
+          toBeContinuedOnFinish,
+          // yes they meant to be invoked here in order to run returned cleaners
+          // and more important to initiate Finish stage burried inside
+          [clearAddUIWithDelay(), clearRunFinishWithDelay()],
+          fnOnFinish
+        ),
       },
     })
     // dispatch custom event toBeContinuedStart

@@ -152,10 +152,12 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
     const creditsOnStart = createEvent('credits', 'Start', {
       bubbles: true,
       detail: {
-        terminate: creditsTerminate(ringtone, fnOnFinish, creditsOnFinish, [
-          clearAddUIWithDelay(),
-          clearRunFinishWithDelay(),
-        ]),
+        terminate: creditsTerminate(
+          ringtone,
+          creditsOnFinish,
+          [clearAddUIWithDelay(), clearRunFinishWithDelay()],
+          fnOnFinish
+        ),
       },
     })
     // dispatch custom event creditsOnStart
