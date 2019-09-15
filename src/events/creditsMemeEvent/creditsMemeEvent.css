@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Clarendon';
-  src: url('clarendon.otf') format('opentype');
+  src: url('https://res.cloudinary.com/bolotskydev/raw/upload/v1568286768/meme-events/clarendon.otf') format('opentype');
 }
 
 .credits--active {

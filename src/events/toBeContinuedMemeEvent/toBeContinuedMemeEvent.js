@@ -9,16 +9,12 @@
 import {
   delay,
   delayWithControls,
-  /* initiate$, */
   createEvent,
   removeNode,
 } from '../../helpers/utils'
-// assets
-import toBeContinuedTrack from './assets/roundabout.mp3'
-import toBeContinuedMemeEventStyles from './assets/toBeContinuedMemeEvent.css'
 
-// introduce jQuery-like syntax
-/* initiate$() */
+// import css in order to be processed by webpack
+import toBeContinuedMemeEventStyles from './toBeContinuedMemeEvent.css'
 
 /* global $ */
 
@@ -118,7 +114,7 @@ export const toBeContinuedFinish = (
 export const toBeContinuedTerminate = (
   ringtone,
   toBeContinuedOnFinish,
-  terminationFns=[],
+  terminationFns = [],
   fnOnFinish
 ) => () => {
   // stop playing audio
@@ -132,13 +128,15 @@ export const toBeContinuedTerminate = (
 // main event function
 // ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
 export const toBeContinuedMemeEvent = ({
-  fnOnStart,
-  fnOnFinish,
+  fnOnStart = () => {},
+  fnOnFinish = () => {},
 } = {}) => () => {
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
-  const ringtone = new Audio(toBeContinuedTrack)
+  const ringtone = new Audio(
+    'https://res.cloudinary.com/bolotskydev/video/upload/v1568294497/meme-events/roundabout.mp3'
+  )
   // add initial class to the body in order to prevent future meme activation
   // serves as a state for the terminate function
   $('body')[0].classList.add('toBeContinued--activated')
@@ -160,15 +158,14 @@ export const toBeContinuedMemeEvent = ({
     const toBeContinuedOnStart = createEvent('toBeContinued', 'Start', {
       bubbles: true,
       detail: {
-        terminate: () =>
-          toBeContinuedTerminate(
-            ringtone,
-            toBeContinuedOnFinish,
-            // yes they meant to be invoked here in order to run returned cleaners
-            // and more important to initiate Finish stage burried inside
-            [clearAddUIWithDelay(), clearRunFinishWithDelay()],
-            fnOnFinish
-          ),
+        terminate: toBeContinuedTerminate(
+          ringtone,
+          toBeContinuedOnFinish,
+          // yes they meant to be invoked here in order to run returned cleaners
+          // and more important to initiate Finish stage burried inside
+          [clearAddUIWithDelay(), clearRunFinishWithDelay()],
+          fnOnFinish
+        ),
       },
     })
     // dispatch custom event toBeContinuedStart
@@ -180,10 +177,4 @@ export const toBeContinuedMemeEvent = ({
   ringtone.play()
 }
 
-// aggregate for convenient export
-const toBeContinuedMemeEventSet = {
-  toBeContinuedMemeEvent,
-  toBeContinuedMemeEventStyles,
-}
-
-export default toBeContinuedMemeEventSet
+export default toBeContinuedMemeEvent

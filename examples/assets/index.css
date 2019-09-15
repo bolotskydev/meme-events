@@ -1,0 +1,137 @@
+/*-----------------------------------*\
+  $RESET
+\*-----------------------------------*/
+
+body {
+  overflow-x: hidden;
+}
+
+*,
+:before,
+:after {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+input,
+select,
+button,
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+}
+
+/*SET UP */
+:root {
+  --main: #3b81a2;
+  --l-shades: #fbfafa;
+  --l-accent: #a3c8d3;
+  --d-shades: #52524e;
+  --d-accent: #bd8485;
+  --mw: 'Merriweather Sans', sans-serif;
+  --mt: 'Montserrat', serif;
+}
+
+html {
+  font: 100%/1.5 var(--mt);
+  color: var(--l-shades);
+  font-smoothing: antialiased;
+  text-align: center;
+}
+
+.page {
+  background: var(--l-shades);
+  min-height: 100vh;
+  display: flex;
+}
+
+.wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 15px;
+  width: 60%;
+  height: auto;
+  background: var(--d-shades);
+  padding: 1rem;
+  margin: auto;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--l-shades) 50%,
+    transparent 100%
+  );
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.header__title {
+  font-family: var(--mw);
+  margin: 1rem 0;
+}
+
+.content {
+  margin: 1rem 0;
+}
+.content__title {
+  font-family: var(--mw);
+  margin: 1rem 0;
+}
+
+.content__dropdown {
+  border: 1px solid var(--d-accent);
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin: 0.375rem;
+  background: url(images/ddown.svg), var(--l-shades);
+  background-repeat: no-repeat;
+  background-size: 1.5rem 1rem;
+  background-position: right center;
+  color: var(--d-shades);
+  position: relative;
+}
+.content__dropdown:active {
+  color: var(--d-accent);
+}
+.btn {
+  border: 1px solid var(--d-accent);
+  line-height: 1.375;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  cursor: pointer;
+  color: var(--d-shades);
+  padding: 0.75rem;
+  margin: 0.375rem;
+  background-color: var(--l-shades);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.btn:active {
+  color: var(--d-accent);
+}
+
+.footer {
+  margin-top: 1rem;
+}
+.footer__btn--bmc {
+  margin-top: 1rem;
+}
+
+.link {
+  color: var(--l-shades);
+  transition: color 0.2s ease;
+}
+.link:hover {
+  color: var(--d-accent);
+}
