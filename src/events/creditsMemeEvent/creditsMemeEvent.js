@@ -5,8 +5,6 @@
  * ===============================================
  */
 
-/* global $ */
-
 // deps
 import {
   removeNode,
@@ -27,14 +25,14 @@ import creditsMemeEventStyles from './creditsMemeEvent.css'
 // removes credits UI
 // () -> void
 export const removeCreditsUI = () => {
-  removeNode($('.credits__backdrop')[0])
+  removeNode(document.querySelector('.credits__backdrop'))
 }
 
 // runs credits titles
 // () -> void
 export const runCreditsTitles = () => {
   // save backdrop element into a variable
-  const backdrop = $('.credits__backdrop')[0]
+  const backdrop = document.querySelector('.credits__backdrop')
   // change titles 1 step
   delay(() => {
     backdrop.innerHTML = `
@@ -61,14 +59,14 @@ export const addCreditsBackdrop = () => {
     <h1>Directed by</h1> 
     <p>robert b. weide</p>
   `
-  $('body')[0].appendChild(backdrop)
+  document.querySelector('body').appendChild(backdrop)
 }
 
 // clear memes prints
 // () -> void
 export const creditsCleanUp = () => {
   // remove state mark
-  $('body')[0].classList.remove('credits--activated')
+  document.querySelector('body').classList.remove('credits--activated')
   // remove meme UI
   removeCreditsUI()
 }
@@ -97,11 +95,11 @@ export const creditsFinish = (
   fnOnFinish
 ) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
-  if ($('body')[0].classList.contains('credits--activated')) {
+  if (document.querySelector('body').classList.contains('credits--activated')) {
     // perform clean up
     creditsCleanUp()
     // dispatch custom event creditsOnFinish
-    $('body')[0].dispatchEvent(creditsOnFinish)
+    document.querySelector('body').dispatchEvent(creditsOnFinish)
     // run optional onFinish fn if exists
     fnOnFinish && fnOnFinish()
   }
@@ -127,14 +125,14 @@ export const creditsTerminate = (
 // ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
 export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
   // prevent triggering if already activated
-  if ($('body')[0].classList.contains('credits--activated')) return
+  if (document.querySelector('body').classList.contains('credits--activated')) return
   // create meme audio ringtone
   const ringtone = new Audio(
     'https://res.cloudinary.com/bolotskydev/video/upload/v1568286768/meme-events/credits.mp3'
   )
   // add initial class to a body in order to prevent future meme activation
   // serves as state for the terminate function
-  $('body')[0].classList.add('credits--activated')
+  document.querySelector('body').classList.add('credits--activated')
   // wrap future execution steps in a callback of onloadedmetadata listener in order to get acces to a duration prop
   ringtone.on('loadedmetadata', e => {
     // wrap UI step into delay and get controls
@@ -161,7 +159,7 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
       },
     })
     // dispatch custom event creditsOnStart
-    $('body')[0].dispatchEvent(creditsOnStart)
+    document.querySelector('body').dispatchEvent(creditsOnStart)
     // run optional onStart fn if exists
     fnOnStart && fnOnStart()
   })

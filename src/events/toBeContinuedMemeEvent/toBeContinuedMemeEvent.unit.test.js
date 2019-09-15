@@ -5,11 +5,7 @@ import {
   removeToBeContinuedUI,
   addToBeContinuedArrow,
 } from './toBeContinuedMemeEvent'
-// import event dep
-import { initiate$ } from '../../helpers/utils'
 
-// inroduce jQuery-like syntax
-initiate$()
 // jest native timer mocking
 jest.useFakeTimers()
 

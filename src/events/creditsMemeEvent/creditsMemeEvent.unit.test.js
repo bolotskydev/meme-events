@@ -1,11 +1,6 @@
 import { addCreditsBackdrop, runCreditsTitles } from './creditsMemeEvent'
-import { initiate$ } from '../../helpers/utils'
-
-// events dependency
-initiate$()
 
 /* eslint-env node, jest */
-/* global $ */
 
 jest.useFakeTimers()
 
