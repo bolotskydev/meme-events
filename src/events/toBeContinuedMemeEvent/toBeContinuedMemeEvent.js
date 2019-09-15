@@ -130,7 +130,7 @@ export const toBeContinuedTerminate = (
 export const toBeContinuedMemeEvent = ({
   fnOnStart = () => {},
   fnOnFinish = () => {},
-}) => () => {
+} = {}) => () => {
   // prevent triggering if already activated
   if ($('body')[0].classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
