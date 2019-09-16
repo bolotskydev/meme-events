@@ -59,14 +59,14 @@ export const addCreditsBackdrop = () => {
     <h1>Directed by</h1> 
     <p>robert b. weide</p>
   `
-  document.querySelector('body').appendChild(backdrop)
+  document.body.appendChild(backdrop)
 }
 
 // clear memes prints
 // () -> void
 export const creditsCleanUp = () => {
   // remove state mark
-  document.querySelector('body').classList.remove('credits--activated')
+  document.body.classList.remove('credits--activated')
   // remove meme UI
   removeCreditsUI()
 }
@@ -95,11 +95,11 @@ export const creditsFinish = (
   fnOnFinish
 ) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
-  if (document.querySelector('body').classList.contains('credits--activated')) {
+  if (document.body.classList.contains('credits--activated')) {
     // perform clean up
     creditsCleanUp()
     // dispatch custom event creditsOnFinish
-    document.querySelector('body').dispatchEvent(creditsOnFinish)
+    document.body.dispatchEvent(creditsOnFinish)
     // run optional onFinish fn if exists
     fnOnFinish && fnOnFinish()
   }
@@ -125,16 +125,16 @@ export const creditsTerminate = (
 // ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
 export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
   // prevent triggering if already activated
-  if (document.querySelector('body').classList.contains('credits--activated')) return
+  if (document.body.classList.contains('credits--activated')) return
   // create meme audio ringtone
   const ringtone = new Audio(
     'https://res.cloudinary.com/bolotskydev/video/upload/v1568286768/meme-events/credits.mp3'
   )
   // add initial class to a body in order to prevent future meme activation
   // serves as state for the terminate function
-  document.querySelector('body').classList.add('credits--activated')
+  document.body.classList.add('credits--activated')
   // wrap future execution steps in a callback of onloadedmetadata listener in order to get acces to a duration prop
-  ringtone.on('loadedmetadata', e => {
+  ringtone.onloadedmetadata = e => {
     // wrap UI step into delay and get controls
     const clearAddUIWithDelay = () => delayWithControls(addCreditsUI)(1200)
     // create onFinish Custom Event
@@ -159,10 +159,10 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
       },
     })
     // dispatch custom event creditsOnStart
-    document.querySelector('body').dispatchEvent(creditsOnStart)
+    document.body.dispatchEvent(creditsOnStart)
     // run optional onStart fn if exists
     fnOnStart && fnOnStart()
-  })
+  }
   // activate ringtone
   ringtone.play()
 }

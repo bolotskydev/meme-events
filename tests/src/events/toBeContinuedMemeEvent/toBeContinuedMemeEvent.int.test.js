@@ -1,5 +1,4 @@
 /* eslint-env node, jest */
-/* global $ */
 
 // import all functions that require integration testing
 import {
@@ -8,12 +7,6 @@ import {
   toBeContinuedTerminate,
   toBeContinuedMemeEvent,
 } from '../../../../src/events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
-
-// import events helper function
-import { initiate$ } from '../../../../src/helpers/utils'
-
-// activate
-initiate$()
 
 // jest native timer mocking
 jest.useFakeTimers()
@@ -50,32 +43,32 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
       toBeContinuedCleanUp()
       jest.runAllTimers()
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeFalsy()
     })
     test('runs removeToBeContinuedUI', () => {
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
-      expect($('#toBeContinued__arrow').length).toBe(1)
+      expect(document.querySelector('#toBeContinued__arrow')).not.toBeNull()
       toBeContinuedCleanUp()
       jest.runAllTimers()
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeFalsy()
-      expect($('#toBeContinued__arrow').length).toBe(0)
+      expect(document.querySelector('#toBeContinued__arrow')).toBeNull()
     })
     test('does nothing if body has no *--activated class', () => {
-      expect($('#toBeContinued__arrow')[0]).toBeDefined()
+      expect(document.querySelector('#toBeContinued__arrow')).not.toBeNull()
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
-      $('body')[0].classList.remove('toBeContinued--activated')
+      document.body.classList.remove('toBeContinued--activated')
       toBeContinuedCleanUp()
       jest.runAllTimers()
-      expect($('#toBeContinued__arrow')[0]).toBeDefined()
+      expect(document.querySelector('#toBeContinued__arrow')).not.toBeNull()
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
     })
   })
@@ -88,52 +81,55 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
     })
     test('does nothing if body has no *--activated class', () => {
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeTruthy()
-      $('body')[0].classList.remove('toBeContinued--activated')
+      document.body.classList.remove('toBeContinued--activated')
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeFalsy()
       toBeContinuedFinish()()
-      expect($('#toBeContinued__arrow').length).toBe(1)
+      expect(document.querySelector('#toBeContinued__arrow')).not.toBeNull()
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
     })
     test('runs toBeContinuedCleanUp', () => {
-      expect($('#toBeContinued__arrow').length).toBe(1)
+      expect(document.querySelector('#toBeContinued__arrow')).not.toBeNull()
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeTruthy()
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeTruthy()
       toBeContinuedFinish()()
       jest.runAllTimers()
-      expect($('#toBeContinued__arrow').length).toBe(0)
+      expect(document.querySelector('#toBeContinued__arrow')).toBeNull()
       expect(
-        $('body')[0].classList.contains('toBeContinued--colorScheme')
+        document.body.classList.contains('toBeContinued--colorScheme')
       ).toBeFalsy()
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeFalsy()
     })
     test('dispatches default CustomEvent if no params passed', () => {
-      $('body')[0].on('DefaultMemeEventOnFinish', mockCallback)
+      document.body.addEventListener('DefaultMemeEventOnFinish', mockCallback)
       toBeContinuedFinish()()
       expect(mockCallback).toBeCalled()
       expect(mockCallback).toHaveBeenCalledTimes(1)
-      $('body')[0].off('DefaultMemeEventOnFinish', mockCallback)
+      document.body.removeEventListener(
+        'DefaultMemeEventOnFinish',
+        mockCallback
+      )
     })
     test('dispatches passed CustomEvent', () => {
-      $('body')[0].on('TestEvent', mockCallback)
+      document.body.addEventListener('TestEvent', mockCallback)
       toBeContinuedFinish(testEvent)()
       expect(mockCallback).toBeCalled()
       expect(mockCallback).toHaveBeenCalledTimes(1)
-      $('body')[0].off('TestEvent', mockCallback)
+      document.body.removeEventListener('TestEvent', mockCallback)
     })
     test('does run fnOnFinish once if specified', () => {
       toBeContinuedFinish(undefined, mockCallback)()
@@ -195,28 +191,28 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
       })
     })
     test('does not run if body has --activated class', () => {
-      $('body')[0].classList.add('toBeContinued--activated')
+      document.body.classList.add('toBeContinued--activated')
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeTruthy()
       toBeContinuedMemeEvent()()
       jest.runAllTimers()
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeTruthy()
       expect(HTMLMediaElement.prototype.play).not.toBeCalled()
     })
     test('does run if body has no --activated class', () => {
-      $('body')[0].on('toBeContinuedOnStart', mockCallback)
+      document.body.addEventListener('toBeContinuedOnStart', mockCallback)
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeFalsy()
       toBeContinuedMemeEvent()()
       expect(
-        $('body')[0].classList.contains('toBeContinued--activated')
+        document.body.classList.contains('toBeContinued--activated')
       ).toBeTruthy()
       expect(mockCallback).toHaveBeenCalledTimes(1)
-      $('body')[0].off('toBeContinuedOnStart', mockCallback)
+      document.body.removeEventListener('toBeContinuedOnStart', mockCallback)
     })
     test('does run the fnOnStart if passed', () => {
       toBeContinuedMemeEvent({ fnOnStart: mockCallback })()

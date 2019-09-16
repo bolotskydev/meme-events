@@ -9,7 +9,6 @@ import {
 /*
  *HELPERS & MOCKS
  */
-/* global $ */
 jest.useFakeTimers()
 
 // mock console
@@ -17,28 +16,6 @@ global.console = {
   log: jest.fn(),
   warn: jest.fn(),
   error: jest.fn(),
-}
-// simple click simulation function
-// simulateClick(el: Node) -> Node
-const simulateClick = el => {
-  const click = new MouseEvent('click', {
-    bubbles: true,
-    cancelable: true,
-    view: window,
-  })
-  el.dispatchEvent(click)
-  return el
-}
-
-// clean up changes after initiate$
-const cleanUpAfterInitiate$ = () => {
-  window.$ = undefined
-  window.on = undefined
-  window.off = undefined
-  Node.prototype.on = undefined
-  Node.prototype.off = undefined
-  NodeList.prototype.on = undefined
-  NodeList.prototype.off = undefined
 }
 
 /*
@@ -155,12 +132,12 @@ describe('UTILS UNIT TEST SUIT', () => {
     test('should remove first matched node if selector matches multiple nodes', () => {
       removeNode('p')
       expect(document.getElementById('first')).toBeNull()
-      expect(document.getElementById('second')).toBeDefined()
+      expect(document.getElementById('second')).not.toBeNull()
     })
     test('should have correctly removed passed single Node', () => {
       removeNode(document.body.querySelector('#first'))
       expect(document.body.querySelector('#first')).toBeNull()
-      expect(document.body.querySelector('#second')).toBeDefined()
+      expect(document.body.querySelector('#second')).not.toBeNull()
       expect(document.body.innerHTML).not.toEqual(snapshot)
     })
   })

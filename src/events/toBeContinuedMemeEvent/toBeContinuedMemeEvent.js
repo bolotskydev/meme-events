@@ -16,8 +16,6 @@ import {
 // import css in order to be processed by webpack
 import toBeContinuedMemeEventStyles from './toBeContinuedMemeEvent.css'
 
-/* global $ */
-
 /*
  * ==============================
  * toBeContinued Helper Functions
@@ -28,7 +26,7 @@ import toBeContinuedMemeEventStyles from './toBeContinuedMemeEvent.css'
 // () -> void
 export const removeToBeContinuedUI = () => {
   // save arrow el in variable
-  const arrow = $('#toBeContinued__arrow')[0]
+  const arrow = document.querySelector('#toBeContinued__arrow')
   // proceed if arrow exists
   if (arrow) {
     // animate out arrow element
@@ -38,7 +36,7 @@ export const removeToBeContinuedUI = () => {
       // remove arrow element
       removeNode(arrow)
       // remove styling class from body
-      $('body')[0].classList.remove('toBeContinued--colorScheme')
+      document.body.classList.remove('toBeContinued--colorScheme')
     })(500)
   }
 }
@@ -61,15 +59,15 @@ export const addToBeContinuedArrow = () => {
   </svg> 
   `
   // add arrow to a body
-  $('body')[0].appendChild(arrow)
+  document.body.appendChild(arrow)
 }
 
 // clear memes prints
 // () -> void
 export const toBeContinuedCleanUp = () => {
-  if ($('body')[0].classList.contains('toBeContinued--activated')) {
+  if (document.body.classList.contains('toBeContinued--activated')) {
     // remove state class
-    $('body')[0].classList.remove('toBeContinued--activated')
+    document.body.classList.remove('toBeContinued--activated')
     // remove meme event UI
     removeToBeContinuedUI()
   }
@@ -79,7 +77,7 @@ export const toBeContinuedCleanUp = () => {
 // () -> void
 export const addToBeContinuedUI = () => {
   // add styling class to a body
-  $('body')[0].classList.add('toBeContinued--colorScheme')
+  document.body.classList.add('toBeContinued--colorScheme')
   // add arrow element
   addToBeContinuedArrow()
 }
@@ -99,11 +97,11 @@ export const toBeContinuedFinish = (
   fnOnFinish
 ) => () => {
   // check if still active (prevent delay functions to run) otherwise do nothing
-  if ($('body')[0].classList.contains('toBeContinued--activated')) {
+  if (document.body.classList.contains('toBeContinued--activated')) {
     // perform clean up
     toBeContinuedCleanUp()
     // dispatch custom event toBeContinuedOnFinish
-    $('body')[0].dispatchEvent(toBeContinuedOnFinish)
+    document.body.dispatchEvent(toBeContinuedOnFinish)
     // run optional onFinish fn if exists
     if (fnOnFinish) fnOnFinish()
   }
@@ -132,16 +130,16 @@ export const toBeContinuedMemeEvent = ({
   fnOnFinish = () => {},
 } = {}) => () => {
   // prevent triggering if already activated
-  if ($('body')[0].classList.contains('toBeContinued--activated')) return
+  if (document.body.classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
   const ringtone = new Audio(
     'https://res.cloudinary.com/bolotskydev/video/upload/v1568294497/meme-events/roundabout.mp3'
   )
   // add initial class to the body in order to prevent future meme activation
   // serves as a state for the terminate function
-  $('body')[0].classList.add('toBeContinued--activated')
+  document.body.classList.add('toBeContinued--activated')
   // wrap future execution steps in a callback of onloadedmetadata listener in order to work with duration prop
-  ringtone.on('loadedmetadata', e => {
+  ringtone.onloadedmetadata = e => {
     // wrap UI render step into the delay helper and get timeout control back
     const clearAddUIWithDelay = () =>
       delayWithControls(addToBeContinuedUI)(4000)
@@ -169,10 +167,10 @@ export const toBeContinuedMemeEvent = ({
       },
     })
     // dispatch custom event toBeContinuedStart
-    $('body')[0].dispatchEvent(toBeContinuedOnStart)
+    document.body.dispatchEvent(toBeContinuedOnStart)
     // run optional onStart fn if exists
     fnOnStart && fnOnStart()
-  })
+  }
   // activate ringtone
   ringtone.play()
 }

@@ -1,5 +1,4 @@
 /* eslint-env node, jest */
-/* global $ */
 
 import {
   removeToBeContinuedUI,
@@ -21,17 +20,17 @@ describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
         document.body.classList.add('toBeContinued--colorScheme')
       })
       test('does nothing if no arrow element found', () => {
-        $('body')[0].removeChild($('#toBeContinued__arrow')[0])
+        document.body.removeChild(document.querySelector('#toBeContinued__arrow'))
         removeToBeContinuedUI()
         jest.runAllTimers()
         expect(
-          $('body')[0].classList.contains('toBeContinued--colorScheme')
+          document.body.classList.contains('toBeContinued--colorScheme')
         ).toBeTruthy()
       })
       test('correctly adds *--out class to the arrow element', () => {
         removeToBeContinuedUI()
         expect(
-          $('#toBeContinued__arrow')[0].classList.contains(
+          document.querySelector('#toBeContinued__arrow').classList.contains(
             'toBeContinued__arrow--out'
           )
         ).toBeTruthy()
@@ -39,23 +38,23 @@ describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
       })
       test('correctly removes arrow element with delay fn', () => {
         removeToBeContinuedUI()
-        expect($('#toBeContinued__arrow')[0]).toBeDefined()
+        expect(document.querySelector('#toBeContinued__arrow')).not.toBeNull()
         jest.runAllTimers()
-        expect($('#toBeContinued__arrow')[0]).not.toBeDefined()
+        expect(document.querySelector('#toBeContinued__arrow')).toBeNull()
         expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 500)
       })
       test('correctly removes event decoration class from the body element with delay fn', () => {
         removeToBeContinuedUI()
         expect(
-          $('body')[0].classList.contains('toBeContinued--colorScheme')
+          document.body.classList.contains('toBeContinued--colorScheme')
         ).toBeTruthy()
         jest.runAllTimers()
         expect(
-          $('body')[0].classList.contains('toBeContinued--colorScheme')
+          document.body.classList.contains('toBeContinued--colorScheme')
         ).toBeFalsy()
       })
       test('does not crashes if body has no decoration class', () => {
-        $('body')[0].classList.remove('toBeContinued--colorScheme')
+        document.body.classList.remove('toBeContinued--colorScheme')
         jest.runAllTimers()
         expect(() => removeToBeContinuedUI()).not.toThrow()
       })
@@ -68,20 +67,20 @@ describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
       })
       test('correctly appends arrow element to the body', () => {
         addToBeContinuedArrow()
-        expect($('#toBeContinued__arrow')[0].parentNode).toBe($('body')[0])
+        expect(document.querySelector('#toBeContinued__arrow').parentNode).toBe(document.body)
       })
       test('appended arrow element has class and id of toBeContinued__arrow ', () => {
         addToBeContinuedArrow()
         expect(
-          $('#toBeContinued__arrow')[0].classList.contains(
+          document.querySelector('#toBeContinued__arrow').classList.contains(
             'toBeContinued__arrow'
           )
         ).toBeTruthy()
-        expect($('.toBeContinued__arrow')[0].id).toBe('toBeContinued__arrow')
+        expect(document.querySelector('.toBeContinued__arrow').id).toBe('toBeContinued__arrow')
       })
       test('appended arrow el has svg inside', () => {
         addToBeContinuedArrow()
-        expect($('svg')[0].parentNode).toBe($('#toBeContinued__arrow')[0])
+        expect(document.querySelector('svg').parentNode).toBe(document.querySelector('#toBeContinued__arrow'))
       })
     })
   })
