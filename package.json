@@ -16,7 +16,7 @@
     "lint": "eslint src tests",
     "format": "prettier --check 'src/**/*.{css,js}'",
     "build": "webpack --progress",
-    "prepublish-old": "yarn clean && yarn format && yarn lint && yarn test && yarn build"
+    "prepublish": "yarn clean && yarn format && yarn lint && yarn test && yarn build"
   },
   "files": [
     "dist",
