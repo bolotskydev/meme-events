@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'Clarendon';
-  src: url('https://res.cloudinary.com/bolotskydev/raw/upload/v1568286768/meme-events/clarendon.otf') format('opentype');
+  src: url('https://res.cloudinary.com/bolotskydev/raw/upload/v1568286768/meme-events/clarendon.otf')
+    format('opentype');
 }
 
 .credits--active {
@@ -42,4 +43,14 @@
   font-size: 2rem;
   margin: 0;
   letter-spacing: 2px;
+}
+
+/*
+ *adjust font size for devices under 425px wide 
+ */
+@media screen and (max-width: 424px) {
+  .credits__backdrop h1,
+  .credits__backdrop p {
+    font-size: 1.5rem;
+  }
 }

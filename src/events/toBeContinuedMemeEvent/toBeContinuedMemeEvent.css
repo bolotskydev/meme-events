@@ -15,6 +15,27 @@
   animation: flyIn 0.5s forwards ease-in;
   transform: translateX(100%);
 }
+/*
+ *adjust for different devices
+ */
+@media screen and (min-width: 1440px) {
+  .toBeContinued__arrow {
+    width: 20vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .toBeContinued__arrow {
+    width: 40vw;
+  }
+}
+@media screen and (max-width: 425px) {
+  .toBeContinued__arrow {
+    width: 50vw;
+  }
+}
+/*
+ *
+ */
 .toBeContinued__arrow--out {
   animation: flyOut 0.5s forwards ease-out;
 }
@@ -23,6 +44,10 @@
   font-family: 'Indie Flower', cursive;
   font-weight: bold;
 }
+
+/*
+ *simple arrow animation
+ */
 
 @keyframes flyIn {
   0% {

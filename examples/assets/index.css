@@ -53,12 +53,19 @@ html {
   display: flex;
   flex-flow: column nowrap;
   border-radius: 15px;
-  width: 60%;
+  width: 60vw;
+  max-width: 1000px;
   height: auto;
   background: var(--d-shades);
   padding: 1rem;
   margin: auto;
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 760px) {
+  .wrapper {
+    width: 80vw;
+  }
 }
 
 hr {
