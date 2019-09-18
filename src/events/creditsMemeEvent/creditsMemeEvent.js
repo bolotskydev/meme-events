@@ -13,7 +13,8 @@ import {
   createEvent,
 } from '../../helpers/utils'
 
-// assets
+/* workaround to include css into webpack build */
+/* eslint-disable-next-line no-unused-vars */
 import creditsMemeEventStyles from './creditsMemeEvent.css'
 
 /*

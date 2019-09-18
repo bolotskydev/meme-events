@@ -13,7 +13,8 @@ import {
   removeNode,
 } from '../../helpers/utils'
 
-// import css in order to be processed by webpack
+// workaround to get css file included into  webpack build
+/* eslint-disable-next-line no-unused-vars */
 import toBeContinuedMemeEventStyles from './toBeContinuedMemeEvent.css'
 
 /*
