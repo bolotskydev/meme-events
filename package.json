@@ -1,7 +1,7 @@
 {
   "name": "meme-events",
   "version": "1.0.0",
-  "description": "Simple zero-dependence framework-agnostic library that exposes CSS & JS versions of popular video memes to use in client side of a web app",
+  "description": "Plug-and-play CSS/JS versions of popular video memes. Framework agnistic & dependency free",
   "main": "src/index.js",
   "scripts": {
     "clean": "rimraf dist",
