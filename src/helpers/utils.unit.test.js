@@ -1,10 +1,5 @@
 /* eslint-env node, jest */
-import {
-  createEvent,
-  delay,
-  delayWithControls,
-  removeNode,
-} from './utils'
+import { createEvent, delay, delayWithControls, removeNode } from './utils'
 
 /*
  *HELPERS & MOCKS

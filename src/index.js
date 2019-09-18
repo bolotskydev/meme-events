@@ -11,9 +11,8 @@ import creditsMemeEvent from './events/creditsMemeEvent/creditsMemeEvent'
 
 // expose events direct to the window object in case of cdn
 
-;
-
-(() => {
+// eslint-disable-next-line no-unused-vars
+const __initMemeEvents__ = (() => {
   Object.defineProperties(window, {
     toBeContinuedMemeEvent: {
       value: toBeContinuedMemeEvent,

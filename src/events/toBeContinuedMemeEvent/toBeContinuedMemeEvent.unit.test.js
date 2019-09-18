@@ -8,7 +8,6 @@ import {
 // jest native timer mocking
 jest.useFakeTimers()
 
-
 describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
   describe('--helpers function tests', () => {
     describe('removeToBeContinuedUI fn testing', () => {
@@ -20,7 +19,9 @@ describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
         document.body.classList.add('toBeContinued--colorScheme')
       })
       test('does nothing if no arrow element found', () => {
-        document.body.removeChild(document.querySelector('#toBeContinued__arrow'))
+        document.body.removeChild(
+          document.querySelector('#toBeContinued__arrow')
+        )
         removeToBeContinuedUI()
         jest.runAllTimers()
         expect(
@@ -30,9 +31,9 @@ describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
       test('correctly adds *--out class to the arrow element', () => {
         removeToBeContinuedUI()
         expect(
-          document.querySelector('#toBeContinued__arrow').classList.contains(
-            'toBeContinued__arrow--out'
-          )
+          document
+            .querySelector('#toBeContinued__arrow')
+            .classList.contains('toBeContinued__arrow--out')
         ).toBeTruthy()
         jest.runAllTimers()
       })
@@ -67,20 +68,26 @@ describe('toBeContinuedMemeEvent UNIT TEST SUIT', () => {
       })
       test('correctly appends arrow element to the body', () => {
         addToBeContinuedArrow()
-        expect(document.querySelector('#toBeContinued__arrow').parentNode).toBe(document.body)
+        expect(document.querySelector('#toBeContinued__arrow').parentNode).toBe(
+          document.body
+        )
       })
       test('appended arrow element has class and id of toBeContinued__arrow ', () => {
         addToBeContinuedArrow()
         expect(
-          document.querySelector('#toBeContinued__arrow').classList.contains(
-            'toBeContinued__arrow'
-          )
+          document
+            .querySelector('#toBeContinued__arrow')
+            .classList.contains('toBeContinued__arrow')
         ).toBeTruthy()
-        expect(document.querySelector('.toBeContinued__arrow').id).toBe('toBeContinued__arrow')
+        expect(document.querySelector('.toBeContinued__arrow').id).toBe(
+          'toBeContinued__arrow'
+        )
       })
       test('appended arrow el has svg inside', () => {
         addToBeContinuedArrow()
-        expect(document.querySelector('svg').parentNode).toBe(document.querySelector('#toBeContinued__arrow'))
+        expect(document.querySelector('svg').parentNode).toBe(
+          document.querySelector('#toBeContinued__arrow')
+        )
       })
     })
   })
