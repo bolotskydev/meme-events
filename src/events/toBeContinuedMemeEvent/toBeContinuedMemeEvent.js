@@ -150,9 +150,9 @@ export const toBeContinuedMemeEvent = ({
     })
     // wrap finish step into delay and get controls
     const clearRunFinishWithDelay = () =>
-      delayWithControls(toBeContinuedFinish(toBeContinuedOnFinish, () => fnOnFinish(event)))(
-        e.target.duration * 1000
-      )
+      delayWithControls(
+        toBeContinuedFinish(toBeContinuedOnFinish, () => fnOnFinish(event))
+      )(e.target.duration * 1000)
     // create onStart Custom Event
     const toBeContinuedOnStart = createEvent('toBeContinued', 'Start', {
       bubbles: true,
