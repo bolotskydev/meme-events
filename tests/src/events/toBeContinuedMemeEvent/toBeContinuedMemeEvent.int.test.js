@@ -138,10 +138,12 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
     })
   })
   describe('--toBeContinuedTerminate fn testing', () => {
-    beforeEach(() => {
-      resetBody()
+    beforeAll(() => {
       HTMLMediaElement.prototype.play = mockCallback
       HTMLMediaElement.prototype.pause = mockCallback
+    })
+    beforeEach(() => {
+      resetBody()
     })
     test('runs .pause method on passed Audio object', () => {
       toBeContinuedTerminate(ringtoneStub, testEvent, [], undefined)()
@@ -181,14 +183,16 @@ describe('toBeContinuedMemeEvent INTEGRATION TEST SUIT', () => {
     })
   })
   describe('--toBeContinuedMemeEvent fn testing', () => {
+    beforeAll(() => {
+      HTMLMediaElement.prototype.play = jest.fn(function sendEvent() {
+        this.dispatchEvent(new Event('loadedmetadata', { bubbles: true }))
+      })
+    })
     beforeEach(() => {
       document.body.innerHTML = `
     <h1>tBC Integration testing </h1> 
   `
       document.body.classList = []
-      HTMLMediaElement.prototype.play = jest.fn(function() {
-        this.dispatchEvent(new Event('loadedmetadata', { bubbles: true }))
-      })
     })
     test('does not run if body has --activated class', () => {
       document.body.classList.add('toBeContinued--activated')

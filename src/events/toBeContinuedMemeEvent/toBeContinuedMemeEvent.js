@@ -125,11 +125,11 @@ export const toBeContinuedTerminate = (
 }
 
 // main event function
-// ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
+// ({fnOnStart?: Function, fnOnFinish?: Function}) -> event -> void
 export const toBeContinuedMemeEvent = ({
   fnOnStart = () => {},
   fnOnFinish = () => {},
-} = {}) => () => {
+} = {}) => event => {
   // prevent triggering if already activated
   if (document.body.classList.contains('toBeContinued--activated')) return
   // create meme audio ringtone
@@ -150,7 +150,7 @@ export const toBeContinuedMemeEvent = ({
     })
     // wrap finish step into delay and get controls
     const clearRunFinishWithDelay = () =>
-      delayWithControls(toBeContinuedFinish(toBeContinuedOnFinish, fnOnFinish))(
+      delayWithControls(toBeContinuedFinish(toBeContinuedOnFinish, () => fnOnFinish(event)))(
         e.target.duration * 1000
       )
     // create onStart Custom Event
@@ -163,14 +163,14 @@ export const toBeContinuedMemeEvent = ({
           // yes they meant to be invoked here in order to run returned cleaners
           // and more important to initiate Finish stage burried inside
           [clearAddUIWithDelay(), clearRunFinishWithDelay()],
-          fnOnFinish
+          () => fnOnFinish
         ),
       },
     })
     // dispatch custom event toBeContinuedStart
     document.body.dispatchEvent(toBeContinuedOnStart)
     // run optional onStart fn if exists
-    fnOnStart && fnOnStart()
+    fnOnStart && fnOnStart(event)
   }
   // activate ringtone
   ringtone.play()

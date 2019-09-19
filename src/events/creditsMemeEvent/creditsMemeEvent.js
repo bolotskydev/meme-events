@@ -123,8 +123,11 @@ export const creditsTerminate = (
 }
 
 // main function of creditsMemeEvent
-// ({fnOnStart?: Function, fnOnFinish?: Function}) -> () -> void
-export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
+// ({fnOnStart?: Function, fnOnFinish?: Function}) -> event -> void
+export const creditsMemeEvent = ({
+  fnOnStart = () => {},
+  fnOnFinish = () => {},
+} = {}) => event => {
   // prevent triggering if already activated
   if (document.body.classList.contains('credits--activated')) return
   // create meme audio ringtone
@@ -144,9 +147,9 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
     })
     // wrap finish step into delay and get clear fn back
     const clearRunFinishWithDelay = () =>
-      delayWithControls(creditsFinish(creditsOnFinish, fnOnFinish))(
-        e.target.duration * 1000
-      )
+      delayWithControls(
+        creditsFinish(creditsOnFinish, () => fnOnFinish(event))
+      )(e.target.duration * 1000)
     // create onStart Custom Event
     const creditsOnStart = createEvent('credits', 'Start', {
       bubbles: true,
@@ -155,14 +158,14 @@ export const creditsMemeEvent = ({ fnOnStart, fnOnFinish } = {}) => () => {
           ringtone,
           creditsOnFinish,
           [clearAddUIWithDelay(), clearRunFinishWithDelay()],
-          fnOnFinish
+          () => fnOnFinish(event)
         ),
       },
     })
     // dispatch custom event creditsOnStart
     document.body.dispatchEvent(creditsOnStart)
     // run optional onStart fn if exists
-    fnOnStart && fnOnStart()
+    fnOnStart && fnOnStart(event)
   }
   // activate ringtone
   ringtone.play()

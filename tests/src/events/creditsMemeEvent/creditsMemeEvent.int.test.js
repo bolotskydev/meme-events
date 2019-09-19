@@ -138,11 +138,13 @@ describe('creditsMemeEvent INTEGRATION TEST SUIT', () => {
     })
   })
   describe('creditsMemeEvent fn testing', () => {
-    beforeEach(() => {
-      resetBody()
-      HTMLMediaElement.prototype.play = jest.fn(function() {
+    beforeAll(() => {
+      HTMLMediaElement.prototype.play = jest.fn(function sendEvent() {
         this.dispatchEvent(new Event('loadedmetadata', { bubbles: true }))
       })
+    })
+    beforeEach(() => {
+      resetBody()
     })
     test('does not run if body has --activated class', () => {
       document.body.classList.add('credits--activated')

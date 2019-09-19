@@ -1,8 +1,9 @@
 /*
- *Entry point of meme-events
+ * Entry point of meme-events
  */
 
-// import available memes
+// import available meme events
+//
 // eslint-disable-next-line import/no-named-as-default
 import toBeContinuedMemeEvent from './events/toBeContinuedMemeEvent/toBeContinuedMemeEvent'
 
