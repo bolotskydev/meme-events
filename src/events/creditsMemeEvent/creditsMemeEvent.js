@@ -138,6 +138,8 @@ export const creditsMemeEvent = ({
   // serves as state for the terminate function
   document.body.classList.add('credits--activated')
   // wrap future execution steps in a callback of onloadedmetadata listener in order to get acces to a duration prop
+  // create outer var for terminateEvent fn in order to pass it later into OnStart fn
+  let terminateEvent
   ringtone.onloadedmetadata = e => {
     // wrap UI step into delay and get controls
     const clearAddUIWithDelay = () => delayWithControls(addCreditsUI)(1200)
@@ -151,21 +153,22 @@ export const creditsMemeEvent = ({
         creditsFinish(creditsOnFinish, () => fnOnFinish(event))
       )(e.target.duration * 1000)
     // create onStart Custom Event
+    terminateEvent = creditsTerminate(
+      ringtone,
+      creditsOnFinish,
+      [clearAddUIWithDelay(), clearRunFinishWithDelay()],
+      () => fnOnFinish(event)
+    )
     const creditsOnStart = createEvent('credits', 'Start', {
       bubbles: true,
       detail: {
-        terminate: creditsTerminate(
-          ringtone,
-          creditsOnFinish,
-          [clearAddUIWithDelay(), clearRunFinishWithDelay()],
-          () => fnOnFinish(event)
-        ),
+        terminateEvent,
       },
     })
     // dispatch custom event creditsOnStart
     document.body.dispatchEvent(creditsOnStart)
-    // run optional onStart fn if exists
-    fnOnStart && fnOnStart(event)
+    // run optional onStart fn if exists and expose terminate() fn to user's fn
+    fnOnStart && fnOnStart(event, terminateEvent)
   }
   // activate ringtone
   ringtone.play()

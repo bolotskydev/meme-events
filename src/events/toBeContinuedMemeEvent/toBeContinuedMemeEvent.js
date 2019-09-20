@@ -139,6 +139,8 @@ export const toBeContinuedMemeEvent = ({
   // add initial class to the body in order to prevent future meme activation
   // serves as a state for the terminate function
   document.body.classList.add('toBeContinued--activated')
+  // prepare terminate fn var in outer scope for future passing into user's OnStart fn
+  let terminateEvent
   // wrap future execution steps in a callback of onloadedmetadata listener in order to work with duration prop
   ringtone.onloadedmetadata = e => {
     // wrap UI render step into the delay helper and get timeout control back
@@ -154,23 +156,25 @@ export const toBeContinuedMemeEvent = ({
         toBeContinuedFinish(toBeContinuedOnFinish, () => fnOnFinish(event))
       )(e.target.duration * 1000)
     // create onStart Custom Event
+    terminateEvent = toBeContinuedTerminate(
+      ringtone,
+      toBeContinuedOnFinish,
+      // yes they meant to be invoked here in order to run returned cleaners
+      // and more important to initiate Finish stage burried inside
+      [clearAddUIWithDelay(), clearRunFinishWithDelay()],
+      () => fnOnFinish
+    )
     const toBeContinuedOnStart = createEvent('toBeContinued', 'Start', {
       bubbles: true,
       detail: {
-        terminate: toBeContinuedTerminate(
-          ringtone,
-          toBeContinuedOnFinish,
-          // yes they meant to be invoked here in order to run returned cleaners
-          // and more important to initiate Finish stage burried inside
-          [clearAddUIWithDelay(), clearRunFinishWithDelay()],
-          () => fnOnFinish
-        ),
+        terminateEvent,
       },
     })
     // dispatch custom event toBeContinuedStart
     document.body.dispatchEvent(toBeContinuedOnStart)
-    // run optional onStart fn if exists
-    fnOnStart && fnOnStart(event)
+
+    // run optional onStart fn if exists and expose terminate fn to user's function
+    fnOnStart && fnOnStart(event, terminateEvent)
   }
   // activate ringtone
   ringtone.play()
