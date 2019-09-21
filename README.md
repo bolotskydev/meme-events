@@ -31,7 +31,7 @@
 * [Advanced Usage](#advanced-usage)
 	* [MemeEvent Lifecycle](#memeevent-lifecycle)
 	* [Optional Arguments](#optional-arguments)
-* [Browser ](#roadmap)
+* [Browser Support](#browser-support)
 * [Contributing](#contributing)
 * [License](#license)
 * [Contacts](#contacts)
@@ -218,6 +218,10 @@ document.body.addEventListener('MemeNameOnFinish', e=> {
 })
 document.body.addEventListener('click', MemeNameMemeEvent())
 ```
+
+## Browser Support
+According to [caniuse](https://caniuse.com), it is pretty safe to think
+
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -279,5 +283,5 @@ Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsk
 
 Project Link: [https://github.com/github_username/repo](https://github.com/BolotskyDev/meme-events)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTE1NTU2NDQ4LC00NDQzMTAwOTBdfQ==
+eyJoaXN0b3J5IjpbMTQ0NTA1NTc3LC00NDQzMTAwOTBdfQ==
 -->
