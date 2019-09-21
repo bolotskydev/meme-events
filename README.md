@@ -151,12 +151,16 @@ const MemeEventsBtnsRow = props => {
 ReactDOM.render(<MemeEventsBtnsRow />, document.getElementById('root')) 
 
 ```
+
 **Vue**
 ```vue
 // @TODO
 ```
+
 ## Advanced Usage
+
 ### MemeEvent Lifecycle
+
 Every meme event follows the same basic structure:
 ```js
 // pseudocode
@@ -227,7 +231,6 @@ So, according to [caniuse](https://caniuse.com), it is pretty safe to think that
 
 The only exception its, of course, Opera Mini, but lets be honest, who cares.
 
-<!-- CONTRIBUTING -->
 ## Contributing
 
 meme-events is amazing place to start contributing to open source. It is written in pure ES6+, testing infrastructure is ready, no cumbersome async code is involved, no 3rd party API whatsoever besides requesting assets from Cloudinary.
