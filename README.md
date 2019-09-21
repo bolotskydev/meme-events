@@ -74,7 +74,7 @@ import 'meme-events/src/events/creditsMemeEvent/creditsMemeEvent.css'
 **Coming next:**
 - [Be Right Back](https://www.youtube.com/watch?v=e53q3NrX2HI)
 - [Shooting Star](https://www.youtube.com/watch?v=kCYPV8xlT2M)
-- [FBI Open Up]([https://www.youtube.com/watch?v=08vk9g-jcsM](https://www.youtube.com/watch?v=08vk9g-jcsM))
+- [FBI Open Up](https://www.youtube.com/watch?v=08vk9g-jcsM)
 
 _Warning! This project is extremely fun and easy to [contribute](#contributing). Don't hesitate to take a part!_
 
