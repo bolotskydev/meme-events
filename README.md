@@ -221,7 +221,7 @@ document.body.addEventListener('click', MemeNameMemeEvent())
 
 ## Browser Support
 
-Currently the most bleeding-edge features that get exploited in the library is Audio Element(), the rest if pretty basic ES6+ stuff that is handled by Babel anyway.
+Currently the most bleeding-edge features that get exploited in the library is [Audio Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#targetText=The%20HTML%20element%20is,choose%20the%20most%20suitable%20one.), the rest is basic ES6+ stuff that is handled by Babel during prod building anyway.
 
 So, according to [caniuse](https://caniuse.com), it is pretty safe to think that compiled version of meme-events will fly on IE8+, Edge 12+ and therefore almost every version of Chrome & FF & Safari. 
 
@@ -288,5 +288,5 @@ Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsk
 
 Project Link: [https://github.com/github_username/repo](https://github.com/BolotskyDev/meme-events)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU5MTg4MDQ0MiwtNDQ0MzEwMDkwXX0=
+eyJoaXN0b3J5IjpbLTI2MjY5OTUyOSwtNDQ0MzEwMDkwXX0=
 -->
