@@ -220,7 +220,9 @@ document.body.addEventListener('click', MemeNameMemeEvent())
 ```
 
 ## Browser Support
-According to [caniuse](https://caniuse.com), it is pretty safe to think that compiled version of meme-events will fly on IE
+According to [caniuse](https://caniuse.com), it is pretty safe to think that compiled version of meme-events will fly on IE8+, Edge 12+ and therefore almost every version of Chrome & FF & Safari. 
+
+The only exception its, of course, Opera Mini, but lets be honest, who cares.
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -283,5 +285,5 @@ Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsk
 
 Project Link: [https://github.com/github_username/repo](https://github.com/BolotskyDev/meme-events)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU3NTkwNDMzNCwtNDQ0MzEwMDkwXX0=
+eyJoaXN0b3J5IjpbLTU5MTY2NDYwMCwtNDQ0MzEwMDkwXX0=
 -->
