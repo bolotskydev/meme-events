@@ -31,7 +31,7 @@
 * [Advanced Usage](#advanced-usage)
 	* [MemeEvent Lifecycle](#memeevent-lifecycle)
 	* [Optional Arguments](#optional-arguments)
-* [Roadmap](#roadmap)
+* [Browser ](#roadmap)
 * [Contributing](#contributing)
 * [License](#license)
 * [Contacts](#contacts)
@@ -279,5 +279,5 @@ Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsk
 
 Project Link: [https://github.com/github_username/repo](https://github.com/BolotskyDev/meme-events)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ0NDMxMDA5MF19
+eyJoaXN0b3J5IjpbMTE1NTU2NDQ4LC00NDQzMTAwOTBdfQ==
 -->
