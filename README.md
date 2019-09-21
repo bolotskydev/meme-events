@@ -273,12 +273,10 @@ In already presented events there are some static assets like fonts and .mp3 fil
 Please, use issue and pull request templates that you may found in this repo. If you have any specific questions, feel free to contact me.
 
 
-
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
 
 
 <!-- CONTACT -->
@@ -286,7 +284,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsky.dev - [bolotsky.dev](https://bolotsky.dev)
 
-Project Link: [https://github.com/github_username/repo](https://github.com/BolotskyDev/meme-events)
+Project Link: [Github](https://github.com/BolotskyDev/meme-events)
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbLTI2MjY5OTUyOSwtNDQ0MzEwMDkwXX0=
 -->
