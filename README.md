@@ -220,7 +220,7 @@ document.body.addEventListener('click', MemeNameMemeEvent())
 ```
 
 ## Browser Support
-According to [caniuse](https://caniuse.com), it is pretty safe to think
+According to [caniuse](https://caniuse.com), it is pretty safe to think that compiled version of meme-events will fly on IE
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -283,5 +283,5 @@ Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsk
 
 Project Link: [https://github.com/github_username/repo](https://github.com/BolotskyDev/meme-events)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQ0NTA1NTc3LC00NDQzMTAwOTBdfQ==
+eyJoaXN0b3J5IjpbLTU3NTkwNDMzNCwtNDQ0MzEwMDkwXX0=
 -->
