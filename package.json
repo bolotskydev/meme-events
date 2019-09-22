@@ -1,6 +1,6 @@
 {
   "name": "meme-events",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Plug-and-play CSS/JS versions of popular video memes. Framework agnistic & dependency free",
   "main": "src/index.js",
   "scripts": {
