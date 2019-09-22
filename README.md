@@ -12,7 +12,7 @@
     ·
     <a href="https://github.com/BolotskyDev/meme-events/issues">Request Feature</a>
    ·
-    <a href="https://npmjs.com">Check NPM Registry Page</a>
+    <a href="https://npmjs.com/package/meme-events">Check NPM Registry Page</a>
   </p>
   
 
@@ -74,7 +74,12 @@ import 'meme-events/src/events/creditsMemeEvent/creditsMemeEvent.css'
 **Coming next:**
 - [Be Right Back](https://www.youtube.com/watch?v=e53q3NrX2HI)
 - [Shooting Star](https://www.youtube.com/watch?v=kCYPV8xlT2M)
+- [You Died](https://www.youtube.com/watch?v=j_nV2jcTFvA)
+
+**May be:**
 - [FBI Open Up](https://www.youtube.com/watch?v=08vk9g-jcsM)
+- [Wasted](https://www.youtube.com/watch?v=nxBivXsihkI)
+
 
 _Warning! This project is extremely fun and easy to [contribute](#contributing). Don't hesitate to take a part!_
 
@@ -276,13 +281,11 @@ In already presented events there are some static assets like fonts and .mp3 fil
 Please, use issue and pull request templates that you may found in this repo. If you have any specific questions, feel free to contact me.
 
 
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 
-<!-- CONTACT -->
 ## Contacts
 
 Kirill Bolotsky - [Twitter](https://twitter.com/@bolotskyDev) - frontend@bolotsky.dev - [bolotsky.dev](https://bolotsky.dev)
