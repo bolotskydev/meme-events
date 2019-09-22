@@ -7,7 +7,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: './index.js',
   output: {
-    filename: '[name].js',
+    filename: 'meme-events.min.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -42,7 +42,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: 'meme-events.min.css',
     }),
     new CleanWebpackPlugin({
       verbose: true,
