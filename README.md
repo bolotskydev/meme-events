@@ -6,7 +6,7 @@
     Plug-and-play CSS/JS versions of popular video memes
     <br />
     <br />
-    <a href="https://bolotskydev.github.com/meme-events">View Demo</a>
+    <a href="https://bolotskydev.github.io/meme-events">View Demo</a>
      ·
     <a href="https://github.com/BolotskyDev/meme-events/issues">Report Bug or Request Feature</a>
     ·
