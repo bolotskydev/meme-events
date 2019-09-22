@@ -6,13 +6,11 @@
     Plug-and-play CSS/JS versions of popular video memes
     <br />
     <br />
-    <a href="https://github.com/BolotskyDev/meme-events/docs">View Demo</a>
+    <a href="https://github.com/BolotskyDev/meme-events">View Demo</a>
      ·
-    <a href="https://github.com/BolotskyDev/meme-events/issues">Report Bug</a>
+    <a href="https://github.com/BolotskyDev/meme-events/issues">Report Bug or Request Feature</a>
     ·
-    <a href="https://github.com/BolotskyDev/meme-events/issues">Request Feature</a>
-   ·
-    <a href="https://npmjs.com/package/meme-events">Check NPM Registry Page</a>
+    <a href="https://npmjs.com/package/meme-events">NPM Registry Page</a>
   </p>
   
 
@@ -47,15 +45,12 @@ Every meme is just a function that you can bind as a handler to any event you wa
 
 ### Built With
 
-I promised you "no dependencies", but, of course, I didn't mean "no dev deps".
-
 If you are going to contribute, keep in mind that this project uses:
 
 * [Webpack](https://webpack.js.org/) stuffed with [Babel](https://babeljs.io), [postcss](https://postcss.org) and other bread-n-butter things for bundling into CDN version
 * [Jest](https://jestjs.io) and [Test Cafe](https://devexpress.github.io) for unit/integration and e2e automated testing
 * [Travis CI](https://travis-ci.com) for, well, you know
-* [np](https://www.npmjs.com/package/np?activeTab=dependents) for publish management
-* [ESLint](https://eslint.org) and [Prettier](https://prettier.io) for linting and formatting of all kind
+* [ESLint](https://eslint.org) and [Prettier](https://prettier.io) for linting and formatting of all kinds
 
 ### List Of Events
 
@@ -67,7 +62,7 @@ If you are going to contribute, keep in mind that this project uses:
   ```
   - [Curb Your Enthusiasm Credits](https://www.youtube.com/watch?v=CdqMZ_s7Y6k)
   ```js
-import {creditsMemeEvent} from 'meme-events`
+import {creditsMemeEvent} from 'meme-events'
 import 'meme-events/src/events/creditsMemeEvent/creditsMemeEvent.css'
   ```
 
@@ -97,9 +92,16 @@ In order to use meme-events via CDN you have to simply include these links in yo
 
 ```html
 <!-- Add the requiring meme-events.css for styling -->
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bolotskydev/meme-events/meme-eventd.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/meme-events@latest/dist/meme-event.min.css"/>
 <!-- Add the requiring meme-events.js (keep in mind the script queue though) -->
-<script defer src="//cdn.jsdelivr.ner/bolotskydev/meme-events/meme-events.js"></script>
+<script defer src="//cdn.jsdelivr.net/npm/meme-events@latest/dist/meme-events.min.js"></script>
+```
+
+or
+
+```html
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/meme-events@latest/dist/meme-event.min.css"/>
+<script defer src="https://unpkg.com/meme-events@latest/dist/meme-event.min.js"></script>
 ```
 
 
@@ -110,29 +112,34 @@ Using via npm is pretty much the same as with every other library, in your proje
 ```sh
 npm install --save meme-events
 ``` 
+
 or
+
 ```sh
 yarn add meme-events
 ```
-Of course, you should have package.json initiated.
 
-<!-- USAGE EXAMPLES -->
+Of course, you should have your package.json initiated.
+
 ## Basic Usage
 
 _Option 1_
 
 In your main script you should be able to grab any existing meme events directly from the ```window``` object:
+
 ```js
 const { toBeContinuedMemeEvent } = window
 // yes, it is meant to be invoked there - every event
 // uses currying to deliver optional args (none this time)
 document.body.addEventListener('click', toBeContinuedMemeEvent())
 ```
+
 _Option 2_
 
 Then import what you need and bind as a handler.
 
 **React**
+
 ```jsx
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -167,6 +174,7 @@ ReactDOM.render(<MemeEventsBtnsRow />, document.getElementById('root'))
 ### MemeEvent Lifecycle
 
 Every meme event follows the same basic structure:
+
 ```js
 // pseudocode
 const DefaultMemeEvent = ({fnOnStart = () => {}, fnOnFinish = () => {} ={}) => event => {
@@ -185,17 +193,22 @@ const DefaultMemeEvent = ({fnOnStart = () => {}, fnOnFinish = () => {} ={}) => e
 	fnOnFinish && fnOnFinish(event)
 }
 ```
+
 ### Optional arguments
+
 You can leverage these optional arguments and enhance your experience with meme-events by passing and object during binding handler to an event that contains ```fnOnStart``` or/and ```fnOnFinish```:
+
 ```js
 document.body.addEventListener('click', toBeContinuedMemeEvent({
 	fnOnStart: () => console.log('Event has been started'),
 	fnOnFinish: () => console.log('Event has just finished')
 }))
 ```
+
 Same principles in React/Vue/Whatever.
 
 Furthermore,  ```fnOnStart``` also receives initial ```event``` object and ```terminateEvent``` function and, just in case,```fnOnFinish``` receives the same ```event``` obj too. 
+
 ```js
 const customFnObj = {
 	fnOnStart: (event, terminateEvent) => {
@@ -213,7 +226,9 @@ const customFnObj = {
 
 document.body.addEventListener('click', toBeContinuedMemeEvent(customFnObj))
 ``` 
+
 Of course you could use everything above with plain old listeners and leave optional functions alone:
+
 ```js
 document.body.addEventListener('MemeNameOnStart', e => {
 	console.log(e.target) -> outputs same element
@@ -230,7 +245,7 @@ document.body.addEventListener('click', MemeNameMemeEvent())
 
 ## Browser Support
 
-Currently the most bleeding-edge features that get exploited in the library is [Audio Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#targetText=The%20HTML%20element%20is,choose%20the%20most%20suitable%20one.), the rest is basic ES6+ stuff that is handled by Babel during prod building anyway.
+Currently the most bleeding-edge feature that get exploited in the library is [Audio Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#targetText=The%20HTML%20element%20is,choose%20the%20most%20suitable%20one.), the rest is basic ES6+ stuff that is handled by Babel during prod building anyway.
 
 So, according to [caniuse](https://caniuse.com), it is pretty safe to think that compiled version of meme-events will fly on IE8+, Edge 12+ and therefore almost every version of Chrome & FF & Safari. 
 
@@ -243,8 +258,9 @@ meme-events is amazing place to start contributing to open source. It is written
 However, there is a bunch of problem to be solved by you:
 - consider adding more unit/int tests
 - write automated e2e tests with Test Cafe
-- help with implementing memes from _coming soon_ list
+- help with implementing memes from _coming soon_ or _may be_ list
 - implement your favorite meme on your own
+- make existing meme events better
 
 
 Remember, even if you started coding like 2 weeks ago you are still able to correct typos or improve structure of this documentation, put in order issues section or just find funny meme to be included in library and request its implementation by adding to _coming soon_ list.
